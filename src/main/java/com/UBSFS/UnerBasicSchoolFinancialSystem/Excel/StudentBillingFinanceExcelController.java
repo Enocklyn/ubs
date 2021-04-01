@@ -8,8 +8,10 @@ package com.UBSFS.UnerBasicSchoolFinancialSystem.Excel;
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import org.apache.http.HttpResponse;
 import org.apache.poi.ss.usermodel.Cell;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +28,11 @@ import org.springframework.web.multipart.MultipartFile;
 public class StudentBillingFinanceExcelController {
     @Autowired
     StudentBillingFinanceExcelService SBFES;
+    @GetMapping("/SelectExcelFileToUpload")
+    public String SelectExcelFileToUpload(Model model){
+model.addAttribute("SelectExcelFileToUpload",true);
+return "index";
+ }
     
     @GetMapping("/ShowExcelForm")
     public String ShowExcelForm(Model model){
@@ -38,6 +45,22 @@ public class StudentBillingFinanceExcelController {
     model.addAttribute("StudentClasses",SBFES.ClassNames(file));
     request.getSession().setAttribute("file", file);
     // System.out.println(SBFES.ClassNames(file).toString());
+    return "index";
+    }
+    @GetMapping("ShowStudentsDataExcelForm")
+    public String ShowStudentsDataExcelForm(Model model){
+     model.addAttribute("StudentExcelData", true);
+        return "index";
+    }
+    @PostMapping("/GetStudentsDataExcelFile")
+    public String upLoadStudentList(Model model ,@RequestParam("file")MultipartFile file,HttpResponse response) throws IOException{
+    //SBFES.GetStudentsFromExcelToDB(file, ClassName)
+    System.out.println(".................................."+file.getInputStream());
+    
+    String msg=SBFES.saveStudentsFromExcelFile(file);
+    model.addAttribute("msg",msg );
+    model.addAttribute("StudentExcelData", true);
+   
     return "index";
     }
     

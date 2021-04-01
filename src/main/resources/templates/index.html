@@ -1,631 +1,659 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-<head>
+      <head>
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-  <title>UBS</title>
+    <title>UBS</title>
 
-  <!-- Bootstrap core CSS -->
+    <!-- Bootstrap core CSS -->
     <link th:href="@{http://127.0.0.1:8080/css/bootstrap.min.css}" rel="stylesheet">
 
-  
-  <link rel="stylesheet" type="text/css" th:href="@{http://127.0.0.1:8080/css/datatables.css}"/>
+
+    <link rel="stylesheet" type="text/css" th:href="@{http://127.0.0.1:8080/css/datatables.css}"/>
 
 </head>
 
 <body>
 
-  <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">UBSFS</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="nav navbar-nav  ml-auto">
+
+                    <li class="nav-item h6">
+                        <a class="nav-link" th:href="@{/ShowPTAForm}">ADD PTA Dues</a>
+                        <span class="sr-only">(current)</span>
+
+                    </li>
+                    <li class="nav-item h6">
+                        <a class="nav-link" th:href="@{/term}">Add Term</a>
+                        <span class="sr-only">(current)</span>
+
+                    </li>
+                    <li class="nav-item h6">
+                        <a class="nav-link" th:href="@{/ShowSchoolFeesForm}">Add Termly Fees</a>
+                        <span class="sr-only">(current)</span>
+
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Content -->
     <div class="container">
-      <a class="navbar-brand" href="#">UBSFS</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="nav navbar-nav  ml-auto">
-          
-          <li class="nav-item h6">
-            <a class="nav-link" th:href="@{/ShowPTAForm}">ADD PTA Dues</a>
-            <span class="sr-only">(current)</span>
-           
-          </li>
-          <li class="nav-item h6">
-            <a class="nav-link" th:href="@{/term}">Add Term</a>
-            <span class="sr-only">(current)</span>
-           
-          </li>
-          <li class="nav-item h6">
-            <a class="nav-link" th:href="@{/ShowSchoolFeesForm}">Add Termly Fees</a>
-            <span class="sr-only">(current)</span>
-           
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
 
-  <!-- Page Content -->
-  <div class="container">
+        <div class="row "style="margin-top: 80px;">
 
-    <div class="row "style="margin-top: 80px;">
+            <div class="col-lg-3">
 
-      <div class="col-lg-3">
+                <h1 class="my-4">UBS</h1>
+                <div class="list-group">
+                    <a th:href="@{/Claases}" class="list-group-item">Student list</a>
+                    <a th:href="@{/AddStudentForm}" class="list-group-item">Add new student</a>
+                    <a th:href="@{/SelectExcelFileToUpload}" class="list-group-item">Upload Student File</a>
+                    <a th:href="@{/ShowSendSmsForm}" class="list-group-item">Send SMS </a>
 
-        <h1 class="my-4">UBS</h1>
-        <div class="list-group">
-          <a th:href="@{/Claases}" class="list-group-item">Student list</a>
-          <a th:href="@{/AddStudentForm}" class="list-group-item">Add new student</a>
-          <a th:href="@{/ShowExcelForm}" class="list-group-item">Upload Student File</a>
-        </div>
+                </div>
 
-      </div>
-      <!-- /.col-lg-3 -->
+            </div>
+            <!-- /.col-lg-3 -->
 
-      <div class="col-lg-9">
-          <div class="alert alert-info text-info" th:if="${msg}" th:text="${msg}">
-          </div>
-             <!--payment form--> 
-          <div th:if="${payment}" >
-              <form th:object="${payment}" th:method="post" th:action="@{/SavePayment}">
-       
-              <table class="table table-info">
-              <tr>
-                  <p th:text="${info}" class="text-info alert-info">
-                      
-                  </p>
-              </tr>
-                  <tr>
-               <td></td>
-               <td></td>
-               <td></td>
-               <td><input type="hidden" readonly="true" th:field="*{Student}" ></td>
-               <td><label class="form-control">Amount:</label></td>
-               <td><input type="text" th:field="*{Amount}" class="form-control"></td>
-               <td><input type="text" readonly="true" th:field="*{paymentType}" class="form-control"></td>
-               <td><input type="hidden" readonly="true" th:field="*{term}" >
-                   
-               <label class="form-control" th:text="${payment.term.TermName}">Amount:</label>
-               </td>
-              <td><input type="submit" class="btn btn-primary " value="Save Payment" ></td>
-               </tr>
-              
-              </table>
-          </form>
-          </div>
-       
-          
-    
-    <!-- Adding a new student form-->
-    <div th:if="${newStudent}"> 
-        <div class="row ">
-           
-<form th:method="post" id="form" th:action="@{/SaveStudent}" th:object="${newStudent}" class="table table-responsive form-inline jumbotron">
-   
- 
-    <div class="form-group col-md-4">
-      <label for="text">Student Id</label>
-      <input type="text" class="form-control" th:field="*{StudentId}">
-    </div>
-     
-  <div class="form-group col-md-4">
-    <label for="inputAddress">First Name</label>
-    <input type="text" class="form-control"  th:field="*{FirstName}">
-  </div>
-         <div class="form-group col-md-4">
-    <label for="inputAddress">Sur Name</label>
-    <input type="text" class="form-control"  th:field="*{surname}">
-  </div>
-    
-  <div class="form-group col-md-4">
-    <label for="inputAddress2">Last Name</label>
-    <input type="text" class="form-control"   th:field="*{LastName}">
-  </div>
-         <div class="form-group col-md-4 ">
-    <label for="inputAddress2">Date of Birth</label>
-    <input type="date" class="form-control"   th:field="*{dateOfBirth}">
-  </div>
- 
-    <div class="form-group col-md-4">
-      <label for="inputState">Class</label>
-      <select  id="class" class="form-control" th:field="*{studentklass}">
-        <option id="class" th:each="klass:${StudentClass}"   th:value="${klass.ClassName}" th:text="${klass.ClassName}">kg1</option>
-        
-      </select>
-    </div> 
-    
-    
-    <div class="form-group col-md-4">
-      <label for="inputState">physical Disability</label>
-      <select class="form-control" th:field="*{physicalDisability}">
-        <option th:value="No" >No</option>
-        <option th:value="Yes">Yes</option>
-      </select>
-    </div> 
-    
-    <div class="form-group col-md-4">
-      <label for="inputState">Select Category</label>
-      <select class="form-control" th:field="*{ParentCategory}">
-        <option th:value="Non-Staff" >Non-Staff</option>
-        <option th:value="Senior-Staff">Senior-Staff</option>
-        <option th:value="Junior-Staff">Junior-Staff</option>
-     
-      </select>
-    </div>
-    
-      
-         <div class="form-group col-md-4">
-    <label for="inputAddress2">NHIS Card number</label>
-    <input type="text" class="form-control"   th:field="*{NHISCardumber}">
-  </div>
-      
-    
-   
-   
-            <div class="form-group col-md-4">
-    <label for="inputAddress2">Guardian Name</label>
-    <input type="text" class="form-control"   th:field="*{GuadiaName}">
-  </div>
-      
-      
-        <hr /> 
-        <div class="form-group col-md-4">
-    <label for="inputAddress2">(Only Staff )staff Id</label>
-    <input type="text" class="form-control"   th:field="*{staffId}">
-  
-  </div>
-    <div class="form-group col-md-4">
-    <label for="inputAddress2">Guardian Number</label>
-    <input type="text" class="form-control"  th:field="*{parentNumber}">
+            <div class="col-lg-9">
+                <div class="alert alert-info text-info" th:if="${msg}" th:text="${msg}">
+                </div>
+                <!--payment form--> 
+                <div th:if="${payment}" >
+                    <form th:object="${payment}" th:method="post" th:action="@{/SavePayment}">
 
-    </div>
-         <div class="form-group col-md-4">
-    <label for="inputAddress2">Occupation</label>
-    <input type="text" class="form-control"  th:field="*{Occupation}">
-       
-    </div>
-    <div class="form-group col-md-4" style="margin-top:10px; ">
-        
-    <input type="submit" class="btn  btn-primary" value="Save Student">
-     
-    </div>   
-       
+                        <table class="table table-info">
+                            <tr>
+                            <p th:text="${info}" class="text-info alert-info">
 
-  
-</form>
-         
-          </div>
+                            </p>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><input type="hidden" readonly="true" th:field="*{Student}" ></td>
+                                <td><label class="form-control">Amount:</label></td>
+                                <td><input type="text" th:field="*{Amount}" class="form-control"></td>
+                                <td><input type="text" readonly="true" th:field="*{paymentType}" class="form-control"></td>
+                                <td><input type="hidden" readonly="true" th:field="*{term}" >
 
-        
+                                    <label class="form-control" th:text="${payment.term.TermName}">Amount:</label>
+                                </td>
+                                <td><input type="submit" class="btn btn-primary " value="Save Payment" ></td>
+                            </tr>
 
-        
-          </div>
+                        </table>
+                    </form>
+                </div>
 
-    <!--updating Student Records-->
-    <div th:if="${UpdateStudent}"> 
-        <div class="row ">
-           
-<form th:method="post" id="form" th:action="@{/update}" th:object="${UpdateStudent}" class="table table-responsive form-inline jumbotron">
-   
- 
-    <div class="form-group col-md-4">
-      <label for="text">Student Id</label>
-      <input type="text" readonly="true" class="form-control" th:field="*{StudentId}">
-    </div>
-     
-  <div class="form-group col-md-4">
-    <label for="inputAddress">First Name</label>
-    <input type="text" class="form-control"  th:field="*{FirstName}">
-  </div>
-         <div class="form-group col-md-4">
-    <label for="inputAddress">Sur Name</label>
-    <input type="text" class="form-control"  th:field="*{surname}">
-  </div>
-    
-  <div class="form-group col-md-4">
-    <label for="inputAddress2">Last Name</label>
-    <input type="text" class="form-control"   th:field="*{LastName}">
-  </div>
-         <div class="form-group col-md-4 ">
-    <label for="inputAddress2">Date of Birth</label>
-    <input type="date" class="form-control"   th:field="*{dateOfBirth}">
-  </div>
- 
-    <div class="form-group col-md-4">
-      <label for="inputState">Class</label>
-       <input type="text" readonly="true" class="form-control" th:field="*{studentklass}">
- 
-    </div> 
-    
-    
-    <div class="form-group col-md-4">
-      <label for="inputState">physical Disability</label>
-      <select class="form-control" th:field="*{physicalDisability}">
-        <option th:value="No" >No</option>
-        <option th:value="Yes">Yes</option>
-      </select>
-    </div>  
-      
-         <div class="form-group col-md-4">
-    <label for="inputAddress2">NHIS Card number</label>
-    <input type="text" class="form-control"   th:field="*{NHISCardumber}">
-  </div>
-      
-    
-   
-   
-            <div class="form-group col-md-4">
-    <label for="inputAddress2">Guardian Name</label>
-    <input type="text" class="form-control"   th:field="*{GuadiaName}">
-  </div>
-      
-      
-        <hr /> 
-        <div class="form-group col-md-4">
-    <label for="inputAddress2">(Only Staff )staff Id</label>
-    <input type="text" class="form-control"   th:field="*{staffId}">
-  
-  </div>
-    <div class="form-group col-md-4">
-    <label for="inputAddress2">Guardian Number</label>
-    <input type="text" class="form-control"  th:field="*{parentNumber}">
 
-    </div>
-         <div class="form-group col-md-4">
-    <label for="inputAddress2">Occupation</label>
-    <input type="text" class="form-control"  th:field="*{Occupation}">
-       
-    </div>
-          <div class="form-group col-md-4">
-    <label for="inputAddress2">residential Address</label>
-    <input type="text" class="form-control"  th:field="*{residentialAddress}">
-       
-    </div>
-    <div class="form-group col-md-4" style="margin-top:10px; ">
-        
-    <input type="submit" class="btn  btn-primary" value="Update Student">
-     
-    </div>   
-       
 
-  
-</form>
-         
-          </div>
-    </div>
-    
-    
-    
-    
-    
-      <!--Student List BasedOnClass -->   
-    <div th:if="${StudentList}">
-        
-         <table class="table table-striped table-responsive-md " id="mydata">
-            <thead>
-           <tr>
-               <th>Student Id</th>
-               <th>First Name</th>
-               <th>Last Name</th>
-               <th>Sur Name</th>
-               <th></th>
-               <th></th>
-               <th></th>
-           </tr>
-            </thead>
-            <tbody>
-               <tr th:each="student:${StudentList}">    
-                   <td th:text="${student.StudentId}"></td>
-                  <td th:text="${student.FirstName}"></td>
-                  <td th:text="${student.LastName}"></td>
-                  <td th:text="${student.surname}"></td>
-                  <td><a th:href="@{/StudentDetails/{id}(id=${student.StudentId})}" class="btn btn-primary ">Details</a></td>
-                  <td><a class="btn btn-secondary " 
-               th:href="@{/PaymentForm/{id}/{paymentType}(id=${student.StudentId},paymentType='SchoolFees')}">School Fees</a></td>
-                 <td><a class="btn btn-primary "
-                             th:href="@{/PaymentForm/{id}/{paymentType}(id=${student.StudentId},paymentType='PTA')}"
-                             >PTA</a></td>
-                 
-                   
-               </tr>
-              
-               <!- payment form -->
-               
-            </tbody>
-        </table>
-           
-    </div>
-      
-    <!--List Of Klasses -->
-    <div th:if="${klasses}">
-        <table class="table table-striped tab table-success">
-        <tr>
-            <td>Classes:</td>
-            </tr>
-            <tr th:each="klass:${klasses}">
-                <td><a th:href="@{/Studentlist/{classId} (classId=${klass.ClassName})}" th:text="${klass.ClassName}"></a></td>
-            </tr>  
-        </table>
-    </div>
-    <!--School Fees Form -->
-    <div th:if="${Fees}">
-        <form th:method="post" id="form" th:action="@{/savefees}" th:object="${Fees}" class="jumbotron">
-        
-       <div class="form-group col-md-4">
-      <label for="text">Amount (GHC)</label>
-      <input type="text" class="form-control" th:field="*{Amount}">
-     </div>
-      
-      <div class="form-group col-md-4">
-      <label for="text">Specification</label>
-     <select class="form-control" id="" th:field="*{FeeSpecification}">
-         <option th:value="Junior-Staff">  Junior-Staff</option>
-          <option th:value="Senior-Staff"> Senior-Staff</option>
-        
-         <option th:value="Non-Staff">Non-Staff</option>
-     </select>
-      </div>
-            <div class="form-group col-md-4">
-      <label for="text">Term</label>
-     <select class="form-control" id="" th:field="*{term}">
-         <option th:Each="t:${terms}" th:value="${t.id}" th:text="${t.TermName}">Staff</option>
-        
-     </select>
-      </div>
-        
-            <button type="submit" class="form-control btn btn-primary">Save Fee</button>
-        
-        </form>
-     
-    
-    </div>
-    <!--Term -->
-    <div th:if="${newterm}">
-        <div class="offset-md-1 col-md-6">
-        <form method="post" id="form" th:action="@{/saveTerm}" th:object="${newterm}" class="jumbotron">
-        
-      <div class="form-group ">
-      <label for="inputState">Term Name</label>
-      <select class="form-control" th:field="*{TermName}">
-        <option th:value="FirstTerm" >First Term</option>
-        <option th:value="SecondTerm">Second Term</option>
-        <option th:value="ThirdTerm">Third  Term</option>
-        
-      </select>
-    </div>
-          <div class="form-group ">
-      <label for="text">Starting Date</label>
-      <input type="date" class="form-control" th:field="*{StartDate}">
-     </div>   
-         <div class="form-group ">
-      <label for="text">Ending Date</label>
-      <input type="date" class="form-control" th:field="*{EndDate}">
-     </div>
-            <div class="form-group ">
-      <label for="text">Academic Year</label>
-      <input type="text" readonly="true" class="form-control" th:value="${year}"><br />
-      <input type="hidden" th:field="*{academicyear}">
-   <button type="submit"class=" btn btn-primary">Save Term</button>     
-       
-            </div> 
-             </form>
-        
-        </div> 
-        
-        
-        
-    </div>
-    
-    <!-- PTA form -->
-   
-        
-      <div th:if="${pta}">
-        <form th:method="post" id="form" th:action="@{/SavePTA}" th:object="${pta}" class="jumbotron">
-        
-       <div class="form-group col-md-4">
-      <label for="text">Amount (GHC)</label>
-      <input type="text" class="form-control" th:field="*{Amount}">
-     </div>
-      
-      
-            <div class="form-group col-md-4">
-      <label for="text">Term</label>
-     <select class="form-control" id="" th:field="*{term}">
-         <option th:Each="t:${pTaTerm}" th:value="${t.id}" th:text="${t.TermName}">Staff</option>
-        
-     </select>
-      </div>
-        
-            <button type="submit" class="form-control btn btn-primary">Save PTA</button>
-        
-        </form>
-     
-      
-        
-        </div>
-    
-    <!-- Student Details-->
-    <div th:if="${StudentDetails}">
-        <table class="table table-info table-responsive ">
-       <tr>
-            <th>
-            First Name
-           </th>  <th>
-            Last Name
-           </th><th>
-            Surname
-           </th>
-            <th>
-            date Of Birth  
-           </th>
-             <th>
-            NHIS Card Number
-           </th>
-            <th>
-           Guardian Name
-           </th>
-           <th>
-           Parent Category
-           </th>
-           <th>
-           Phone Number
-           </th>
-            <th>
-           residential Address
-           </th>
-          </tr> <tr>
-              <tr >
-                  <td th:text="${StudentDetails.FirstName}"></td>
-                  <td th:text="${StudentDetails.LastName}"></td>
-                  <td th:text="${StudentDetails.surname}"></td>
-                  <td th:text="${StudentDetails.dateOfBirth}"></td>
-                  <td th:text="${StudentDetails.NHISCardumber}"></td>
-                  <td th:text="${StudentDetails.GuadiaName}"></td>
-                  <td th:text="${StudentDetails.ParentCategory}"></td>
-                  <td th:text="${StudentDetails.parentNumber}"></td>
-                 <td th:text="${StudentDetails.residentialAddress}"></td>   
-              </tr>
-                  
-                      
-          
-        </table>
-        <p><a th:href="@{/UpdateDetails/{id}(id=${StudentDetails.StudentId})}">Update Student Records</a>&nbsp;&nbsp;&nbsp;
-    &nbsp;<a th:href="@{/StudentBill/{id}(id=${StudentDetails.StudentId})}">Student Bills</a>
-    
-    </p>
-     
-    
-    </div>
-          
-    <div th:if="${Studentbills}">
-        <p class="alert-info text-info">Bill for student <b><div th:text="${studentname}"></div></b> </p>
-        <table class="table table-info" id="mydata" >
-            <thead>
-        <TR>     <th>Term</th>
-                <th>PTA</th>
-                <th>SCHOOL FEES</th>
-                <th>Academic Year</th>
-        </tr>
-            </thead>
-            <tbody>
-                <TR th:each="bill:${Studentbills}">
-                    <td th:text="${bill.term.TermName}"></td>
-                    <td th:text="${bill.pta.Amount}"></td>
-                <td th:text="${bill.fee.Amount}"></td>
-                 <td th:text="${bill.fee.term.academicyear.AcademicYear}"></td>
-                
-                </tr>
-                <tr>
-                    
-                <td></td>    
-                  <td></td>
-                  <td>Total Fees:</td><td th:text="${totalBillFees}"></td>  
-                </tr>
-                
-            </tbody>
-                
-           </table>
-        
-    </div>
-          <!--form for uploading excel file-->
-          <div th:if="${excel}" class="jumbotron">
-              <p>Please upload excel file </p>
-              <form th:method="post" class="form-inline" th:action="@{/GetFile}" enctype="multipart/form-data">
-              
-                  <input type="file" class="form-control "  th:name="file" >&nbsp; &nbsp;
-                    <button type="submit" class="btn btn-primary">Upload File</button>
-              </form>
-              
-          </div>
-          
-          <!--Student Classes from excel File-->
-          <div class="row">
-          <div class="col-md-3">
-          <DIV th:if="${StudentClasses}">
-              
-              <table class="table table-responsive-sm table-bordered table-striped">
-                  <tr>
-                      <th>Select Class</th>
-                  </tr>
-                  <tr th:each="class:${StudentClasses}">
-                   <td >
-                       <a th:href="@{/StudetBillingsExcel/{ClassName}(ClassName=${class})}" th:text="${class}">
-                           
-                       </a></td>
-               </tr>
-              </table>
-          </div></div>
-              <div th:if="${StudentBills}" class="col-md-8">
-                 <table class="table table-striped table-bordered " id="mydata">
-                     <thead>
-                         <tr>
-                             <th>Student Id</th>
-                             <th>Student Name</th>
-                             <th>Out Standing Balance </th>
-                         </tr>
-                     </thead>
-                     <tbody>
-                         <tr th:each="studentBil:${StudentBills}">
-                              <td th:text="${studentBil.studentId}"> </td>
-                             <td th:text="${studentBil.Names}"> </td>
-                             <td th:text="${studentBil.OutstandingBalace}"> </td> 
-                           </tr>
-                         
-                         
-                     </tbody>
-                 </table>
-                  
-              </div>
-          </div>
-          
-          
-          
-          
-          </div>
+                <!-- Adding a new student form-->
+                <div th:if="${newStudent}"> 
+                    <div class="row ">
 
-        </div>
-        <!-- /.row -->
+                        <form th:method="post" id="form" th:action="@{/SaveStudent}" th:object="${newStudent}" class="table table-responsive form-inline jumbotron">
 
-  <!-- /.container -->
 
- 
-  <!-- Bootstrap core JavaScript -->
-  
-  <script th:src="@{http://127.0.0.1:8080/script/jquery.min.js}"></script>
-  <script th:src="@{http://127.0.0.1:8080/script/jquery.min.js}"></script>
-<script th:src="@{http://127.0.0.1:8080/script/datatables.js}" type="text/javascript"></script>
-<script th:src="@{http://127.0.0.1:8080/script/jq.progress-bar.js}" type="text/javascript"></script>
+                            <div class="form-group col-md-4">
+                                <label for="text">Student Id</label>
+                                <input type="text" class="form-control" th:field="*{StudentId}">
+                            </div>
 
- <script TYPE="text/javascript">
-        $(document).ready( function () {
-    $('#mydata').DataTable();} );      
-          
-          
-        
-          </script>
-           <script>
-    	$(document).ready(function() {
-			$('#form').showProgress();
-		});
-    </script>
-    <script type="text/javascript">
+                            <div class="form-group col-md-4">
+                                <label for="inputAddress">First Name</label>
+                                <input type="text" class="form-control"  th:field="*{FirstName}">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="inputAddress">Sur Name</label>
+                                <input type="text" class="form-control"  th:field="*{surname}">
+                            </div>
 
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-36251023-1']);
-  _gaq.push(['_setDomainName', 'jqueryscript.net']);
-  _gaq.push(['_trackPageview']);
+                            <div class="form-group col-md-4">
+                                <label for="inputAddress2">Last Name</label>
+                                <input type="text" class="form-control"   th:field="*{LastName}">
+                            </div>
+                            <div class="form-group col-md-4 ">
+                                <label for="inputAddress2">Date of Birth</label>
+                                <input type="date" class="form-control"   th:field="*{dateOfBirth}">
+                            </div>
 
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
+                            <div class="form-group col-md-4">
+                                <label for="inputState">Class</label>
+                                <select  id="class" class="form-control" th:field="*{studentklass}">
+                                    <option id="class" th:each="klass:${StudentClass}"   th:value="${klass.ClassName}" th:text="${klass.ClassName}">kg1</option>
 
-</script>
-</body>
+                                </select>
+                            </div> 
 
-</html>
+
+                            <div class="form-group col-md-4">
+                                <label for="inputState">physical Disability</label>
+                                <select class="form-control" th:field="*{physicalDisability}">
+                                    <option th:value="No" >No</option>
+                                    <option th:value="Yes">Yes</option>
+                                </select>
+                            </div> 
+
+                            <div class="form-group col-md-4">
+                                <label for="inputState">Select Category</label>
+                                <select class="form-control" th:field="*{ParentCategory}">
+                                    <option th:value="Non-Staff" >Non-Staff</option>
+                                    <option th:value="Senior-Staff">Senior-Staff</option>
+                                    <option th:value="Junior-Staff">Junior-Staff</option>
+
+                                </select>
+                            </div>
+
+
+                            <div class="form-group col-md-4">
+                                <label for="inputAddress2">NHIS Card number</label>
+                                <input type="text" class="form-control"   th:field="*{NHISCardumber}">
+                            </div>
+
+
+
+
+                            <div class="form-group col-md-4">
+                                <label for="inputAddress2">Guardian Name</label>
+                                <input type="text" class="form-control"   th:field="*{GuadiaName}">
+                            </div>
+
+
+                            <hr /> 
+                            <div class="form-group col-md-4">
+                                <label for="inputAddress2">(Only Staff )staff Id</label>
+                                <input type="text" class="form-control"   th:field="*{staffId}">
+
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="inputAddress2">Guardian Number</label>
+                                <input type="tel"     pattern="[0-9]{3}[0-9]{3}[0-9]{4}" 
+                                       required class="form-control"  th:field="*{parentNumber}">
+
+
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="inputAddress2">Occupation</label>
+                                <input type="text" class="form-control"  th:field="*{Occupation}">
+
+                            </div>
+                            <div class="form-group col-md-4" style="margin-top:10px; ">
+
+                                <input type="submit" class="btn  btn-primary" value="Save Student">
+
+                            </div>   
+
+
+
+                        </form>
+
+                    </div>
+
+
+
+
+                </div>
+
+                <!--updating Student Records-->
+                <div th:if="${UpdateStudent}"> 
+                    <div class="row ">
+
+                        <form th:method="post" id="form" th:action="@{/update}" th:object="${UpdateStudent}" class="table table-responsive form-inline jumbotron">
+
+
+                            <div class="form-group col-md-4">
+                                <label for="text">Student Id</label>
+                                <input type="text" readonly="true" class="form-control" th:field="*{StudentId}">
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label for="inputAddress">First Name</label>
+                                <input type="text" class="form-control"  th:field="*{FirstName}">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="inputAddress">Sur Name</label>
+                                <input type="text" class="form-control"  th:field="*{surname}">
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label for="inputAddress2">Last Name</label>
+                                <input type="text" class="form-control"   th:field="*{LastName}">
+                            </div>
+                            <div class="form-group col-md-4 ">
+                                <label for="inputAddress2">Date of Birth</label>
+                                <input type="date" class="form-control"   th:field="*{dateOfBirth}">
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label for="inputState">Class</label>
+                                <input type="text" readonly="true" class="form-control" th:field="*{studentklass}">
+
+                            </div> 
+
+
+                            <div class="form-group col-md-4">
+                                <label for="inputState">physical Disability</label>
+                                <select class="form-control" th:field="*{physicalDisability}">
+                                    <option th:value="No" >No</option>
+                                    <option th:value="Yes">Yes</option>
+                                </select>
+                            </div>  
+
+                            <div class="form-group col-md-4">
+                                <label for="inputAddress2">NHIS Card number</label>
+                                <input type="text" class="form-control"   th:field="*{NHISCardumber}">
+                            </div>
+
+
+
+
+                            <div class="form-group col-md-4">
+                                <label for="inputAddress2">*Guardian Name</label>
+                                <input type="text" class="form-control" required  th:field="*{GuadiaName}">
+                            </div>
+
+
+                            <hr /> 
+                            <div class="form-group col-md-4">
+                                <label for="inputAddress2">(Only Staff )staff Id</label>
+                                <input type="text" class="form-control"   th:field="*{staffId}">
+
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="inputAddress2">*Guardian Phone Number</label>
+                                <input type="tel" class="form-control"  th:field="*{parentNumber}">
+
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="inputAddress2">Occupation</label>
+                                <input type="text" class="form-control"  th:field="*{Occupation}">
+
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="inputAddress2">residential Address</label>
+                                <input type="text" class="form-control"  th:field="*{residentialAddress}">
+
+                            </div>
+                            <div class="form-group col-md-4" style="margin-top:10px; ">
+
+                                <input type="submit" class="btn  btn-primary" value="Update Student">
+
+                            </div>   
+
+
+
+                        </form>
+
+                    </div>
+                </div>
+
+
+
+
+
+                <!--Student List BasedOnClass -->   
+                <div th:if="${StudentList}">
+
+                    <table class="table table-striped table-responsive-md " id="mydata">
+                        <thead>
+                            <tr>
+                                <th>Student Id</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Sur Name</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="student:${StudentList}">    
+                                <td th:text="${student.StudentId}"></td>
+                                <td th:text="${student.FirstName}"></td>
+                                <td th:text="${student.LastName}"></td>
+                                <td th:text="${student.surname}"></td>
+                                <td><a th:href="@{/StudentDetails/{id}(id=${student.StudentId})}" class="btn btn-primary ">Details</a></td>
+                                <td><a class="btn btn-secondary " 
+                                       th:href="@{/PaymentForm/{id}/{paymentType}(id=${student.StudentId},paymentType='SchoolFees')}">School Fees</a></td>
+                                <td><a class="btn btn-primary "
+                                       th:href="@{/PaymentForm/{id}/{paymentType}(id=${student.StudentId},paymentType='PTA')}"
+                                       >PTA</a></td>
+
+
+                            </tr>
+
+                            <!- payment form -->
+
+                        </tbody>
+                    </table>
+
+                </div>
+
+                <!--List Of Klasses -->
+                <div th:if="${klasses}">
+                    <table class="table table-striped tab table-success">
+                        <tr>
+                            <td>Classes:</td>
+                        </tr>
+                        <tr th:each="klass:${klasses}">
+                            <td><a th:href="@{/Studentlist/{classId} (classId=${klass.ClassName})}" th:text="${klass.ClassName}"></a></td>
+                        </tr>  
+                    </table>
+                </div>
+                <!--School Fees Form -->
+                <div th:if="${Fees}">
+                    <form th:method="post" id="form" th:action="@{/savefees}" th:object="${Fees}" class="jumbotron">
+
+                        <div class="form-group col-md-4">
+                            <label for="text">Amount (GHC)</label>
+                            <input type="text" class="form-control" th:field="*{Amount}">
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="text">Specification</label>
+                            <select class="form-control" id="" th:field="*{FeeSpecification}">
+                                <option th:value="Junior-Staff">  Junior-Staff</option>
+                                <option th:value="Senior-Staff"> Senior-Staff</option>
+
+                                <option th:value="Non-Staff">Non-Staff</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="text">Term</label>
+                            <select class="form-control" id="" th:field="*{term}">
+                                <option th:Each="t:${terms}" th:value="${t.id}" th:text="${t.TermName}">Staff</option>
+
+                            </select>
+                        </div>
+
+                        <button type="submit" class="form-control btn btn-primary">Save Fee</button>
+
+                    </form>
+
+
+                </div>
+                <!--Term -->
+                <div th:if="${newterm}">
+                    <div class="offset-md-1 col-md-6">
+                        <form method="post" id="form" th:action="@{/saveTerm}" th:object="${newterm}" class="jumbotron">
+
+                            <div class="form-group ">
+                                <label for="inputState">Term Name</label>
+                                <select class="form-control" th:field="*{TermName}">
+                                    <option th:value="FirstTerm" >First Term</option>
+                                    <option th:value="SecondTerm">Second Term</option>
+                                    <option th:value="ThirdTerm">Third  Term</option>
+
+                                </select>
+                            </div>
+                            <div class="form-group ">
+                                <label for="text">Starting Date</label>
+                                <input type="date" class="form-control" th:field="*{StartDate}">
+                            </div>   
+                            <div class="form-group ">
+                                <label for="text">Ending Date</label>
+                                <input type="date" class="form-control" th:field="*{EndDate}">
+                            </div>
+                            <div class="form-group ">
+                                <label for="text">Academic Year</label>
+                                <input type="text" readonly="true" class="form-control" th:value="${year}"><br />
+                                <input type="hidden" th:field="*{academicyear}">
+                                <button type="submit"class=" btn btn-primary"id="upload_btn">Save Term</button>     
+
+                            </div> 
+                        </form>
+<button  class="btn btn-primary d-none" id="loading_btn" type="button">
+                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    Uploading.................
+                                </button>
+                    </div> 
+
+
+
+                </div>
+
+                <!-- PTA form -->
+
+
+                <div th:if="${pta}">
+                    <form th:method="post" id="form" th:action="@{/SavePTA}" th:object="${pta}" class="jumbotron">
+
+                        <div class="form-group col-md-4">
+                            <label for="text">Amount (GHC)</label>
+                            <input type="text" class="form-control" th:field="*{Amount}">
+                        </div>
+
+
+                        <div class="form-group col-md-4">
+                            <label for="text">Term</label>
+                            <select class="form-control" id="" th:field="*{term}">
+                                <option th:Each="t:${pTaTerm}" th:value="${t.id}" th:text="${t.TermName}">Staff</option>
+
+                            </select>
+                        </div>
+
+                        <button type="submit" class="form-control btn btn-primary">Save PTA</button>
+
+                    </form>
+
+
+
+                </div>
+
+                <!-- Student Details-->
+                <div th:if="${StudentDetails}">
+                    <table class="table table-info table-responsive ">
+                        <tr>
+                            <th> First Name  </th> 
+                            <th>  Last Name </th>
+                            <th>Surname </th>
+                            <th>    Date Of Birth </th>
+                            <th>  NHIS Card Number </th>
+                            <th>   Guardian Name </th>
+                            <th>  Parent Category </th>
+                            <th>Phone Number </th>
+                            <th> residential Address </th>
+                        </tr> <tr>
+                        <tr >
+                            <td th:text="${StudentDetails.FirstName}"></td>
+                            <td th:text="${StudentDetails.LastName}"></td>
+                            <td th:text="${StudentDetails.surname}"></td>
+                            <td th:text="${StudentDetails.dateOfBirth}"></td>
+                            <td th:text="${StudentDetails.NHISCardumber}"></td>
+                            <td th:text="${StudentDetails.GuadiaName}"></td>
+                            <td th:text="${StudentDetails.ParentCategory}"></td>
+                            <td th:text="${StudentDetails.parentNumber}"></td>
+                            <td th:text="${StudentDetails.residentialAddress}"></td>   
+                        </tr>
+
+
+
+                    </table>
+                    <p><a th:href="@{/UpdateDetails/{id}(id=${StudentDetails.StudentId})}">Update Student Records</a>&nbsp;&nbsp;&nbsp;
+                        &nbsp;<a th:href="@{/StudentBill/{id}(id=${StudentDetails.StudentId})}">Student Bills</a>
+
+                    </p>
+
+
+                </div>
+
+                <div th:if="${Studentbills}">
+                    <p class="alert-info text-info">Bill for student <b><div th:text="${studentname}"></div></b> </p>
+                    <table class="table table-info" id="mydata" >
+                        <thead>
+                            <TR>     <th>Term</th>
+                                <th>PTA</th>
+                                <th>SCHOOL FEES</th>
+                                <th>Academic Year</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <TR th:each="bill:${Studentbills}">
+                                <td th:text="${bill.term.TermName}"></td>
+                                <td th:text="${bill.pta.Amount}"></td>
+                                <td th:text="${bill.fee.Amount}"></td>
+                                <td th:text="${bill.fee.term.academicyear.AcademicYear}"></td>
+
+                            </tr>
+                            <tr>
+
+                                <td></td>    
+                                <td></td>
+                                <td>Total Fees:</td><td th:text="${totalBillFees}"></td>  
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+                <!--form for uploading excel file-->
+                <div th:if="${SelectExcelFileToUpload}">
+                    <a th:href="@{/ShowExcelForm}">Upload Excel From Finance</a>&nbsp; &nbsp;<a th:href="@{/ShowStudentsDataExcelForm}">Upload Student Data</a>
+
+                </div>
+                <div th:if="${excel}" class="jumbotron">
+                    <p>Please upload excel file (Finance)</p>
+                    <form th:method="post" class="form-inline" th:action="@{/GetFile}" enctype="multipart/form-data">
+
+                        <input type="file" class="form-control "  th:name="file" >&nbsp; &nbsp;
+                        <button type="submit" class="btn btn-primary" id="upload_btn" th:onclick="spinOnload()">Upload File</button>
+                    </form>
+<button  class="btn btn-primary d-none" id="loading_btn" type="button">
+                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    Loading.................
+                                </button>
+                </div>
+
+                <!--Student Classes from excel File-->
+                <div class="row">
+                    <div class="col-md-3">
+                        <DIV th:if="${StudentClasses}">
+
+                            <table class="table table-responsive-sm table-bordered table-striped">
+                                <tr>
+                                    <th>Select Class</th>
+                                </tr>
+                                <tr th:each="class:${StudentClasses}">
+                                    <td >
+                                        <a th:href="@{/StudetBillingsExcel/{ClassName}(ClassName=${class})}" th:text="${class}">
+
+                                        </a></td>
+                                </tr>
+                            </table>
+                        </div></div>
+                    <div th:if="${StudentBills}" class="col-md-8">
+                        <table class="table table-striped table-bordered " id="mydata">
+                            <thead>
+                                <tr>
+                                    <th>Student Id</th>
+                                    <th>Student Name</th>
+                                    <th>Out Standing Balance </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="studentBil:${StudentBills}">
+                                    <td th:text="${studentBil.studentId}"> </td>
+                                    <td th:text="${studentBil.Names}"> </td>
+                                    <td th:text="${studentBil.OutstandingBalace}"> </td> 
+                                </tr>
+
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div th:if="${sms}">
+                        <form class="jumbotron" th:object="${sms}" th:action="@{/sendSms}" th:method='post'> 
+                            <div class="form-group ">
+                                <label for="text">Type message</label>
+                                <textarea th:field="*{message}" class="form-control" rows="5" cols="50">
+                                </textarea>
+                            </div>
+                            <div class="form-group col-md-4">
+
+                                <input type="submit" class="form-control btn-secondary" id="upload_btn" th:onclick="spinOnload()" value="Send SMS">
+                            </div>
+                        </form>
+                        <button  class="btn btn-primary d-none" id="loading_btn" type="button">
+                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    Sending SMS.................
+                                </button>
+                    </div>
+
+                    <!--upload excel file into database--->
+
+                    <div th:if="${StudentExcelData}" class=" jumbotron">
+                        <p>Please upload excel file (Student Data)</p>
+                        <div class=" form-group mb-7">
+                            <div class="custom-file">
+                               
+                                    <input type="file" class="custom-file-input "  th:name="file" id="file" oninput="input_filename()">&nbsp; &nbsp;
+                                    <lable id="file_input_lablel" class="custom-file-label">upload</lable>
+                                    <input type="hidden" th:value="@{/GetStudentsDataExcelFile}" id="route">
+                                    <button type="submit" class="btn btn-primary" id="upload_btn" th:onclick="upload()" >Upload File</button>
+                              
+                                
+                                <button  class="btn btn-primary d-none" id="loading_btn" type="button">
+                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    Uploading.................
+                                </button>
+                                <button class="btn btn-secondary d-none" id="cancel_btn" type="button">Cancel Button</button>
+                                <div id="progress_wrapper" class="d-none">
+                                    <label id="progress_status"></label>
+                                    <div class="progress mb-3">
+                                        <div id="progress" class="progress-bar" role="progressbar" aria-valuenow="25" area-valuemin="0" area-valuemax="100">
+                                        </div>
+                                    </div> 
+                                
+                                </div>
+                                <div id="alert_wrapper"></div>
+                            </div>
+
+                        </div>
+
+
+
+
+                    </div>
+
+                </div>
+                <!-- /.row -->
+
+                <!-- /.container -->
+
+
+                <!-- Bootstrap core JavaScript -->
+
+                <script th:src="@{http://127.0.0.1:8080/script/jquery.min.js}"></script>
+                <script th:src="@{http://127.0.0.1:8080/script/jquery.min.js}"></script>
+                <script th:src="@{http://127.0.0.1:8080/script/datatables.js}" type="text/javascript"></script>
+<script th:src="@{http://127.0.0.1:8080/script/ProgressDialog.js}" type="text/javascript"></script>
+
+                <script TYPE="text/javascript">
+                    $(document).ready(function () {
+                        $('#mydata').DataTable();
+                    });
+
+
+
+                </script>
+
+                </body>
+
+                </html>

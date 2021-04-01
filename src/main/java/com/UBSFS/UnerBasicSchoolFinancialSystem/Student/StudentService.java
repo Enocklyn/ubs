@@ -249,4 +249,16 @@ public class StudentService {
     stud.add(student); }}
     return stud;
     }
+     public String saveStudentsIntoDb(List<Student>students){
+     try{
+         students.forEach(stud -> this.saveStudent(stud));
+               return "saved successfully"+students.toString();
+     
+     }catch(Exception ex){
+     return "fatal error "+ ex.toString()+students.toString();
+     
+     }
+     }
+
+
 }
