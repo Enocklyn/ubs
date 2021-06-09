@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.UBSFS.UnerBasicSchoolFinancialSystem.SMS;
+package com.UBSDB.UnerBasicSchoolFinancialSystem.SMS;
 
 import com.twilio.Twilio;
 import java.util.List;

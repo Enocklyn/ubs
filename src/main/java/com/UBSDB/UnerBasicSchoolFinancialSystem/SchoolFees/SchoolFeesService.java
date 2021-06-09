@@ -3,14 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.UBSFS.UnerBasicSchoolFinancialSystem.SchoolFees;
+package com.UBSDB.UnerBasicSchoolFinancialSystem.SchoolFees;
 
-import com.UBSFS.UnerBasicSchoolFinancialSystem.Bill.BillService;
-import com.UBSFS.UnerBasicSchoolFinancialSystem.Bill.StudentBill;
-import com.UBSFS.UnerBasicSchoolFinancialSystem.Student.Student;
-import com.UBSFS.UnerBasicSchoolFinancialSystem.Student.StudentService;
-import com.UBSFS.UnerBasicSchoolFinancialSystem.Term.Term;
-import com.UBSFS.UnerBasicSchoolFinancialSystem.Term.TermService;
+import com.UBSDB.UnerBasicSchoolFinancialSystem.Bill.BillService;
+import com.UBSDB.UnerBasicSchoolFinancialSystem.Bill.StudentBill;
+import com.UBSDB.UnerBasicSchoolFinancialSystem.PTA.PTAService;
+import com.UBSDB.UnerBasicSchoolFinancialSystem.Student.Student;
+import com.UBSDB.UnerBasicSchoolFinancialSystem.Student.StudentService;
+import com.UBSDB.UnerBasicSchoolFinancialSystem.Term.Term;
+import com.UBSDB.UnerBasicSchoolFinancialSystem.Term.TermService;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -37,7 +38,8 @@ public class SchoolFeesService {
     @Autowired
     private BillService BS;
     
-    
+      @Autowired
+      private PTAService PTAS;
     
     
     
@@ -53,6 +55,7 @@ public class SchoolFeesService {
        bill.setFee(fee);
        bill.setTerm(fee.getTerm());
         BS.saveBill(bill);
+             
        AssignBillToStudentBasedOnFees(bill);
        
       return "saved successfully ";
@@ -86,7 +89,7 @@ public class SchoolFeesService {
     public void AssignBillToStudentBasedOnFees(StudentBill bill){
         
          for(Student stud:SS.students()){
-         if(stud.getParentCategory().equals(bill.getFee().getFeeSpecification())){
+         if(stud.getParentCategory().equals(bill.getFee().getFeeSpecification())&(stud.getStudentStatus().equals("in School"))){
       List<StudentBill>bil= stud.getBill();
       bil.add(bill);
       stud.setStudentId(stud.getStudentId());

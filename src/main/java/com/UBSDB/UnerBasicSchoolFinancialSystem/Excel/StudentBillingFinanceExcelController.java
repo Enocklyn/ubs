@@ -3,9 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.UBSFS.UnerBasicSchoolFinancialSystem.Excel;
+package com.UBSDB.UnerBasicSchoolFinancialSystem.Excel;
 
+import com.UBSDB.UnerBasicSchoolFinancialSystem.Assessment.Assessment;
+import com.UBSDB.UnerBasicSchoolFinancialSystem.Assessment.AssessmentService;
+import com.UBSDB.UnerBasicSchoolFinancialSystem.Subject.SubjectService;
+import com.UBSDB.UnerBasicSchoolFinancialSystem.Term.TermService;
 import java.io.IOException;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.apache.http.HttpResponse;
@@ -28,6 +33,12 @@ import org.springframework.web.multipart.MultipartFile;
 public class StudentBillingFinanceExcelController {
     @Autowired
     StudentBillingFinanceExcelService SBFES;
+    @Autowired
+   private TermService TS;
+     @Autowired
+   private AssessmentService AS;
+    
+           
     @GetMapping("/SelectExcelFileToUpload")
     public String SelectExcelFileToUpload(Model model){
 model.addAttribute("SelectExcelFileToUpload",true);
@@ -47,6 +58,33 @@ return "index";
     // System.out.println(SBFES.ClassNames(file).toString());
     return "index";
     }
+    
+   @GetMapping("TeacherPortal/uploadExcel/{SubjectId}/{TeacherId}")
+   public String  TeacherUpload(Model model,@PathVariable ("SubjectId")Long SubjectId,@PathVariable ("TeacherId")Long TeacherId){
+     model.addAttribute("AcademicYearExcel","please contact admin to add term");
+       model.addAttribute("TermExcel",TS.getCurrentTerm());
+     model.addAttribute("SubjectId",SubjectId);
+    model.addAttribute("TeacherId",TeacherId);
+  return "TeacherPortal";
+} 
+  
+   @PostMapping("TeacherPortal/GetAssessmentExcelFile")
+   public String GetAssessmentExcelFile(Model model,@RequestParam("file")MultipartFile file,@RequestParam("SubjectId")Long SubjectId,@RequestParam("TeacherId")Long TeacherId,HttpServletRequest request) throws IOException{
+      model.addAttribute("Assessment",SBFES.GetStudentAssessmentFromExcelSheet(file,SubjectId, TS.getCurrentTerm()));
+      model.addAttribute("TeacherId",TeacherId);
+      request.getSession().setAttribute("AssessmentExcelFile",SBFES.GetStudentAssessmentFromExcelSheet(file,SubjectId, TS.getCurrentTerm()) );
+      return "TeacherPortal";
+}
+   @GetMapping("/TeacherPortal/SaveAssessment")
+   public String saveAssessment(Model model,HttpSession session){
+       List< Assessment> assess=(List< Assessment>)session.getAttribute("AssessmentExcelFile");
+   for(Assessment s:assess){
+  model.addAttribute("msg",AS.saveAssessment(s));
+   }  
+   return "TeacherPortal";
+   }
+    
+    
     @GetMapping("ShowStudentsDataExcelForm")
     public String ShowStudentsDataExcelForm(Model model){
      model.addAttribute("StudentExcelData", true);
@@ -54,8 +92,6 @@ return "index";
     }
     @PostMapping("/GetStudentsDataExcelFile")
     public String upLoadStudentList(Model model ,@RequestParam("file")MultipartFile file,HttpResponse response) throws IOException{
-    //SBFES.GetStudentsFromExcelToDB(file, ClassName)
-    System.out.println(".................................."+file.getInputStream());
     
     String msg=SBFES.saveStudentsFromExcelFile(file);
     model.addAttribute("msg",msg );
@@ -80,4 +116,6 @@ return "index";
     return "index";
     }
   
+    
+   
     }

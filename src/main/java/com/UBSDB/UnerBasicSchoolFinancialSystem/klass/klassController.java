@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.UBSFS.UnerBasicSchoolFinancialSystem.klass;
+package com.UBSDB.UnerBasicSchoolFinancialSystem.klass;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,9 +28,7 @@ public class klassController {
             return k;
         }).forEachOrdered(k -> {
             kS.saveKlass(k);
-        });
- 
-return "index";
+        });return "index";
  }
  @GetMapping("Claases")
  public String ShowClasses(Model model){

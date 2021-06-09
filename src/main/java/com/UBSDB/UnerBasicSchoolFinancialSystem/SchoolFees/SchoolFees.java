@@ -3,11 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.UBSFS.UnerBasicSchoolFinancialSystem.SchoolFees;
-import com.UBSFS.UnerBasicSchoolFinancialSystem.Academic.Academic;
-import com.UBSFS.UnerBasicSchoolFinancialSystem.Student.Student;
-import com.UBSFS.UnerBasicSchoolFinancialSystem.Term.Term;
-import com.UBSFS.UnerBasicSchoolFinancialSystem.klass.klass;
+package com.UBSDB.UnerBasicSchoolFinancialSystem.SchoolFees;
+import com.UBSDB.UnerBasicSchoolFinancialSystem.Term.Term;
+import java.io.Serializable;
 
 import java.time.LocalDate;
 import javax.persistence.Entity;
@@ -21,7 +19,7 @@ import javax.persistence.OneToOne;
  * @author enock
  */
 @Entity
-public class SchoolFees {
+public class SchoolFees implements Serializable {
  @Id
  @GeneratedValue(strategy=GenerationType.AUTO)
  private Long Id;

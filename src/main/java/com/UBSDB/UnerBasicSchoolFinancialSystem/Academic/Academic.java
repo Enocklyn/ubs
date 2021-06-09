@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.UBSFS.UnerBasicSchoolFinancialSystem.Academic;
-import com.UBSFS.UnerBasicSchoolFinancialSystem.Term.Term;
+package com.UBSDB.UnerBasicSchoolFinancialSystem.Academic;
+import com.UBSDB.UnerBasicSchoolFinancialSystem.Term.Term;
+import java.io.Serializable;
 import java.time.LocalDate;
 
-import java.time.LocalDateTime;
 import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,12 +19,13 @@ import javax.persistence.OneToMany;
  *
  * @author enock
  */
+
 @Entity
-public class Academic {
+public class Academic implements Serializable {
   @Id
   @GeneratedValue(strategy=GenerationType.AUTO)
   private Long Id;
-    private LocalDate AcademicYear;
+  private LocalDate AcademicYear;
     
    @OneToMany(mappedBy="academicyear")
    private Set <Term>term; 

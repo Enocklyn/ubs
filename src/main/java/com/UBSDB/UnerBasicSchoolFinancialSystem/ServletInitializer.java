@@ -1,4 +1,4 @@
-package com.UBSFS.UnerBasicSchoolFinancialSystem;
+package com.UBSDB.UnerBasicSchoolFinancialSystem;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;

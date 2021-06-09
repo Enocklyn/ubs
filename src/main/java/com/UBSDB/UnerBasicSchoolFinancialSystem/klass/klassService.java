@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.UBSFS.UnerBasicSchoolFinancialSystem.klass;
+package com.UBSDB.UnerBasicSchoolFinancialSystem.klass;
 
-import com.UBSFS.UnerBasicSchoolFinancialSystem.Student.Student;
+import com.UBSDB.UnerBasicSchoolFinancialSystem.Student.Student;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -44,13 +44,32 @@ public class klassService {
     klass klas4=new klass(
    "Nursery1","Nursery1"
    );
+    
      klasses.add(klas4);
      klass klas5=new klass(
    "Nursery2","Nursery2"
    ); klasses.add(klas5);
-     
+      
+     klass KG1A=new klass(
+   "KG1A","Kindergaten"
+   );klasses.add(KG1A);
+     klass KG1B=new klass(
+   "KG1B","Kindergaten"
+   );klasses.add(KG1B);
+   
+      klass KG2B=new klass(
+   "KG2B","Kindergaten"
+   );klasses.add(KG2B);
+      klass KG2A=new klass(
+   "KG2A","Kindergaten"
+   );klasses.add(KG2A);
+   
+   
+   
+   
   for(int a=1;a<=6;a++){
   klass klassr=new klass();
+  
   klassr.setClassName("Basic"+a);
   if(a<=3){
   klassr.setClassLevel("LowerPrimary");

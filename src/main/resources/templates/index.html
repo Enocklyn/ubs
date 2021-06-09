@@ -1,39 +1,43 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
+<html xmlns:th="http://www.thymeleaf.org">
       <head>
 
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=0.6, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
 
     <title>UBS</title>
 
     <!-- Bootstrap core CSS -->
-    <link th:href="@{http://127.0.0.1:8080/css/bootstrap.min.css}" rel="stylesheet">
+     <link th:href="@{/css/SideBar.css}" th:rel="stylesheet"/>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
+<link th:href="@{/css/DataTables/jquery.dataTables.css}" rel="stylesheet" type="text/css"/>
+<link th:href="@{/css/DataTables/jquery.dataTables.min.css}" rel="stylesheet" type="text/css"/>
+<link th:href="@{/css/fontawesome.css}" rel="stylesheet}" type="text/css"/>
+<link th:href="@{/css/DataTables/dataTables.foundation.min.css}" rel="stylesheet" type="text/css"/>
+<link th:href="@{/css/DataTables/dataTables.jqueryui.css}" rel="stylesheet" type="text/css"/>
 
-
-    <link rel="stylesheet" type="text/css" th:href="@{http://127.0.0.1:8080/css/datatables.css}"/>
+    <link th:rel="stylesheet" type="text/css" th:href="@{/css/datatables.css}"/>
 
 </head>
 
-<body>
+<body th:style="'background-image:url('+@{/pro-pics/ubs1.jpg}+'); '">
 
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="#">UBSFS</a>
+            <a class="navbar-brand" th:href="@{/}" style="margin-left:-100px; ">
+                <img th:src="@{/pro-pics/UENR.jpg}" height="60" alt="notFound" class=""/>
+                
+                UBSDBS</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="nav navbar-nav  ml-auto">
 
-                    <li class="nav-item h6">
-                        <a class="nav-link" th:href="@{/ShowPTAForm}">ADD PTA Dues</a>
-                        <span class="sr-only">(current)</span>
-
-                    </li>
+                   
                     <li class="nav-item h6">
                         <a class="nav-link" th:href="@{/term}">Add Term</a>
                         <span class="sr-only">(current)</span>
@@ -44,61 +48,46 @@
                         <span class="sr-only">(current)</span>
 
                     </li>
+                    <form th:action="@{/logout}" method="post">
+              <input type="submit" value="Logout" class="btn btn-info " />
+          </form>
                 </ul>
             </div>
         </div>
     </nav>
 
     <!-- Page Content -->
-    <div class="container">
+    <div class="container" >
 
-        <div class="row "style="margin-top: 80px;">
+        <div class="row "style="margin-top: 120px;">
 
-            <div class="col-lg-3">
-
-                <h1 class="my-4">UBS</h1>
-                <div class="list-group">
-                    <a th:href="@{/Claases}" class="list-group-item">Student list</a>
-                    <a th:href="@{/AddStudentForm}" class="list-group-item">Add new student</a>
-                    <a th:href="@{/SelectExcelFileToUpload}" class="list-group-item">Upload Student File</a>
-                    <a th:href="@{/ShowSendSmsForm}" class="list-group-item">Send SMS </a>
-
+            <div class="col-lg-3  ">
+                <div class="sidenav">
+                    <hr /><hr/><hr /><hr/>
+                    <a th:href="@{/Claases}" >Student list</a>
+                    <hr />
+                    <a th:href="@{/AddStudentForm}" >Add new student</a>
+                    <hr />
+                    <a th:href="@{/SelectExcelFileToUpload}" >Upload Student File</a>
+                    <hr />
+                    <a th:href="@{/ShowSendSmsForm}" >Send SMS </a>
+                    <hr />
+                    <a th:href="@{/TeacherForm}" >Add Teacher </a>
+                    <hr />
+                    <a th:href="@{/ClassTeachers}" >Classes  </a>
+                    <hr />
+                      <a th:href="@{/FindAllTeachers}">Teacher List </a>
                 </div>
+
+
 
             </div>
             <!-- /.col-lg-3 -->
 
-            <div class="col-lg-9">
+            <div class="col-lg-9" >
                 <div class="alert alert-info text-info" th:if="${msg}" th:text="${msg}">
                 </div>
                 <!--payment form--> 
-                <div th:if="${payment}" >
-                    <form th:object="${payment}" th:method="post" th:action="@{/SavePayment}">
-
-                        <table class="table table-info">
-                            <tr>
-                            <p th:text="${info}" class="text-info alert-info">
-
-                            </p>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td><input type="hidden" readonly="true" th:field="*{Student}" ></td>
-                                <td><label class="form-control">Amount:</label></td>
-                                <td><input type="text" th:field="*{Amount}" class="form-control"></td>
-                                <td><input type="text" readonly="true" th:field="*{paymentType}" class="form-control"></td>
-                                <td><input type="hidden" readonly="true" th:field="*{term}" >
-
-                                    <label class="form-control" th:text="${payment.term.TermName}">Amount:</label>
-                                </td>
-                                <td><input type="submit" class="btn btn-primary " value="Save Payment" ></td>
-                            </tr>
-
-                        </table>
-                    </form>
-                </div>
 
 
 
@@ -106,7 +95,7 @@
                 <div th:if="${newStudent}"> 
                     <div class="row ">
 
-                        <form th:method="post" id="form" th:action="@{/SaveStudent}" th:object="${newStudent}" class="table table-responsive form-inline jumbotron">
+                        <form th:method="post" id="form" th:action="@{/SaveStudent}" th:object="${newStudent}" class="table table-responsive form-inline jumbotron table-primary" style="margin-left: 4px;" enctype="multipart/form-data">
 
 
                             <div class="form-group col-md-4">
@@ -128,10 +117,24 @@
                                 <input type="text" class="form-control"   th:field="*{LastName}">
                             </div>
                             <div class="form-group col-md-4 ">
+                                <label for="inputAddress">Sex</label>
+                                <select th:field="*{Sex}" class="form-control">
+                                    <option value="Male"  >Male</option>
+                                    <option value="Male"  >Female</option>
+
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4 ">
                                 <label for="inputAddress2">Date of Birth</label>
                                 <input type="date" class="form-control"   th:field="*{dateOfBirth}">
                             </div>
-
+                            <div class="form-group col-md-4 ">
+                                <label for="lable">Student Picture</label>
+                                <input type="file" class="form-control form-control-file" th:id="file-image" th:name="file-image" accept="image/png, image/png" onchange="showImageThumbnail(this)"/>
+    <p>
+        <img id="thumbnail" alt="logo-preview" class="d-none img-thumbnail">
+    </p> 
+    </div>
                             <div class="form-group col-md-4">
                                 <label for="inputState">Class</label>
                                 <select  id="class" class="form-control" th:field="*{studentklass}">
@@ -151,11 +154,22 @@
 
                             <div class="form-group col-md-4">
                                 <label for="inputState">Select Category</label>
-                                <select class="form-control" th:field="*{ParentCategory}">
-                                    <option th:value="Non-Staff" >Non-Staff</option>
-                                    <option th:value="Senior-Staff">Senior-Staff</option>
-                                    <option th:value="Junior-Staff">Junior-Staff</option>
+                                <select class="form-control" th:field="*{ParentCategory}"   onchange="ShowTextField()">
+                                    <option th:value="Non-Staff">Non-Staff</option>
+                                    <option th:value="Senior-Staff" >Senior-Staff</option>
+                                    <option th:value="Junior-Staff" >Junior-Staff</option>
+                                    <script>
+                                        function ShowTextField() {
+                                            if (((document.getElementById("ParentCategory").value == "Senior-Staff") ||
+                                                    (document.getElementById("ParentCategory").value == "Junior-Staff"))) {
+                                                document.getElementById("staff").classList.remove("d-none");
+                                            }
+                                            if (((document.getElementById("ParentCategory").value == "Non-Staff"))) {
+                                                document.getElementById("staff").classList.add("d-none");
 
+                                            }
+                                        }
+                                    </script>
                                 </select>
                             </div>
 
@@ -175,7 +189,7 @@
 
 
                             <hr /> 
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-4 d-none"  id="staff">
                                 <label for="inputAddress2">(Only Staff )staff Id</label>
                                 <input type="text" class="form-control"   th:field="*{staffId}">
 
@@ -194,9 +208,16 @@
                             </div>
                             <div class="form-group col-md-4" style="margin-top:10px; ">
 
-                                <input type="submit" class="btn  btn-primary" value="Save Student">
+                                <input type="submit" class="btn  btn-primary" value="Save Student" id="upload_btn" th:onclick="spinOnload()" >
+
+
+                                <button  class="btn btn-primary d-none" id="loading_btn" type="button">
+                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    Uploading.................
+                                </button>
 
                             </div>   
+                            <button class="btn btn-secondary d-none" id="cancel_btn" type="button">Cancel Button</button>
 
 
 
@@ -213,7 +234,7 @@
                 <div th:if="${UpdateStudent}"> 
                     <div class="row ">
 
-                        <form th:method="post" id="form" th:action="@{/update}" th:object="${UpdateStudent}" class="table table-responsive form-inline jumbotron">
+                        <form th:method="post" id="form" th:action="@{/update}" th:object="${UpdateStudent}" class="table table-responsive form-inline jumbotron" style="margin-left:20px; ">
 
 
                             <div class="form-group col-md-4">
@@ -229,6 +250,15 @@
                                 <label for="inputAddress">Sur Name</label>
                                 <input type="text" class="form-control"  th:field="*{surname}">
                             </div>
+                            <div class="form-group col-md-4 ">
+                                <label for="inputAddress">Sex</label>
+                                <select th:field="*{Sex}" class="form-control">
+                                    <option value="Male"  >Male</option>
+                                    <option value="Male"  >Female</option>
+
+                                </select>
+                            </div>
+
 
                             <div class="form-group col-md-4">
                                 <label for="inputAddress2">Last Name</label>
@@ -280,7 +310,11 @@
 
                             </div>
                             <div class="form-group col-md-4">
+                                <label for="inputAddress2">Occupation </label>
+                                <input type="text" class="form-control"  th:field="*{ParentCategory}" readonly="true">
+                                <hr />
                                 <label for="inputAddress2">Occupation</label>
+
                                 <input type="text" class="form-control"  th:field="*{Occupation}">
 
                             </div>
@@ -291,9 +325,14 @@
                             </div>
                             <div class="form-group col-md-4" style="margin-top:10px; ">
 
-                                <input type="submit" class="btn  btn-primary" value="Update Student">
+                                <input type="submit" class="btn  btn-primary" value="Update Student" id="upload_btn" th:onclick="spinOnload()">
+                                <button  class="btn btn-primary d-none" id="loading_btn" type="button">
+                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    Uploading.................
+                                </button>
 
                             </div>   
+                            <button class="btn btn-secondary d-none" id="cancel_btn" type="button">Cancel Button</button>
 
 
 
@@ -307,15 +346,18 @@
 
 
                 <!--Student List BasedOnClass -->   
-                <div th:if="${StudentList}">
-
-                    <table class="table table-striped table-responsive-md " id="mydata">
+                <div th:if="${StudentList}" class="jumbotron">
+                    <a th:href="@{/DownloadStudentExcelSheet/{ClassId} (ClassId=${classId})}" class="btn btn-primary">
+                        Download Student File
+                    </a>    
+                    <table class="table table-striped table-responsive-md table-primary " id="mydata">
                         <thead>
                             <tr>
                                 <th>Student Id</th>
                                 <th>First Name</th>
                                 <th>Last Name</th>
                                 <th>Sur Name</th>
+                                <th></th>
                                 <th></th>
                                 <th></th>
                                 <th></th>
@@ -329,10 +371,13 @@
                                 <td th:text="${student.surname}"></td>
                                 <td><a th:href="@{/StudentDetails/{id}(id=${student.StudentId})}" class="btn btn-primary ">Details</a></td>
                                 <td><a class="btn btn-secondary " 
-                                       th:href="@{/PaymentForm/{id}/{paymentType}(id=${student.StudentId},paymentType='SchoolFees')}">School Fees</a></td>
-                                <td><a class="btn btn-primary "
+                                       th:href="@{/PaymentForm/{id}/{paymentType}(id=${student.StudentId},paymentType='SchoolFees')}">Fees</a></td>
+                                <td><a class="btn btn-info "
                                        th:href="@{/PaymentForm/{id}/{paymentType}(id=${student.StudentId},paymentType='PTA')}"
                                        >PTA</a></td>
+                                <td><a class="btn btn-primary "
+                                       th:href="@{/FlagStudent/{studentId}/{classId}(studentId=${student.StudentId},classId=${classId})}"
+                                       > Stopped </a></td>
 
 
                             </tr>
@@ -344,15 +389,53 @@
 
                 </div>
 
+                <div th:if="${payment}" class="jumbotron">
+                    <form th:object="${payment}" th:method="post" th:action="@{/SavePayment}">
+
+                        <table class="table table-info">
+                            <tr>
+                            <p th:text="${info}" class="text-info alert-info">
+
+                            </p>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><input type="hidden" readonly="true" th:field="*{Student}" ></td>
+                                <td><label class="form-control">Amount:</label></td>
+                                <td><input type="text" th:field="*{Amount}" class="form-control"></td>
+                                <td><input type="text" readonly="true" th:field="*{paymentType}" class="form-control"></td>
+                                <td><input type="hidden" readonly="true" th:field="*{term}" >
+
+                                    <label class="form-control" th:text="${payment.term.TermName}">Amount:</label>
+                                </td>
+                                <td><input type="submit" class="btn btn-primary " value="Save Payment" id="upload_btn" th:onclick="spinOnload()"></td>
+                            <button  class="btn btn-primary d-none" id="loading_btn" type="button">
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                Uploading.................
+                            </button>
+                            <HR />
+                            <button class="btn btn-secondary d-none" id="cancel_btn" type="button">Cancel Button</button>
+
+                            </tr>
+
+                        </table>
+                    </form>
+                </div>
+
                 <!--List Of Klasses -->
-                <div th:if="${klasses}">
-                    <table class="table table-striped tab table-success">
+                <div th:if="${klasses}" class='jumbotron'>
+                    <table class="table  table-bordered  table-primary table-striped" id="mydata">
+                       <thead>
                         <tr>
                             <td>Classes:</td>
                         </tr>
+                       </thead></tbody>
                         <tr th:each="klass:${klasses}">
-                            <td><a th:href="@{/Studentlist/{classId} (classId=${klass.ClassName})}" th:text="${klass.ClassName}"></a></td>
+                            <td><a th:href="@{/Studentlist/{classId} (classId=${klass.ClassName})}" th:text="${klass.ClassName}" class="h8 text-justify text-primary"></a></td>
                         </tr>  
+                    </tbody>
                     </table>
                 </div>
                 <!--School Fees Form -->
@@ -381,7 +464,13 @@
                             </select>
                         </div>
 
-                        <button type="submit" class="form-control btn btn-primary">Save Fee</button>
+                        <button type="submit" class="form-control btn btn-primary" id="upload_btn" th:onclick="spinOnload()" >Save Fee</button>
+
+                        <button  class="btn btn-primary d-none" id="loading_btn" type="button">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            Uploading.................
+                        </button>
+                        <button class="btn btn-secondary d-none" id="cancel_btn" type="button">Cancel Button</button>
 
                     </form>
 
@@ -413,14 +502,14 @@
                                 <label for="text">Academic Year</label>
                                 <input type="text" readonly="true" class="form-control" th:value="${year}"><br />
                                 <input type="hidden" th:field="*{academicyear}">
-                                <button type="submit"class=" btn btn-primary"id="upload_btn">Save Term</button>     
-
-                            </div> 
-                        </form>
-<button  class="btn btn-primary d-none" id="loading_btn" type="button">
+                                <button type="submit"class=" btn btn-primary"id="upload_btn" th:onclick="spinOnload()" >Save Term</button>     
+                                <button  class="btn btn-primary d-none" id="loading_btn" type="button">
                                     <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                     Uploading.................
                                 </button>
+                            </div> 
+                        </form>
+
                     </div> 
 
 
@@ -430,7 +519,7 @@
                 <!-- PTA form -->
 
 
-                <div th:if="${pta}">
+                <div th:if="${pta}" class="jumbotron">
                     <form th:method="post" id="form" th:action="@{/SavePTA}" th:object="${pta}" class="jumbotron">
 
                         <div class="form-group col-md-4">
@@ -447,7 +536,11 @@
                             </select>
                         </div>
 
-                        <button type="submit" class="form-control btn btn-primary">Save PTA</button>
+                        <button type="submit" class="form-control btn btn-primary" th:onclick="">Save PTA</button>
+                        <button  class="btn btn-primary d-none" id="loading_btn" type="button">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            adding pta.................
+                        </button>
 
                     </form>
 
@@ -456,15 +549,17 @@
                 </div>
 
                 <!-- Student Details-->
-                <div th:if="${StudentDetails}">
+                <div th:if="${StudentDetails}" class="jumbotron">
                     <table class="table table-info table-responsive ">
                         <tr>
                             <th> First Name  </th> 
                             <th>  Last Name </th>
                             <th>Surname </th>
                             <th>    Date Of Birth </th>
+                            <th>   Sex </th>
                             <th>  NHIS Card Number </th>
                             <th>   Guardian Name </th>
+
                             <th>  Parent Category </th>
                             <th>Phone Number </th>
                             <th> residential Address </th>
@@ -474,6 +569,8 @@
                             <td th:text="${StudentDetails.LastName}"></td>
                             <td th:text="${StudentDetails.surname}"></td>
                             <td th:text="${StudentDetails.dateOfBirth}"></td>
+                            <td th:text="${StudentDetails.Sex}"></td>
+
                             <td th:text="${StudentDetails.NHISCardumber}"></td>
                             <td th:text="${StudentDetails.GuadiaName}"></td>
                             <td th:text="${StudentDetails.ParentCategory}"></td>
@@ -492,11 +589,11 @@
 
                 </div>
 
-                <div th:if="${Studentbills}">
+                <div th:if="${Studentbills}" class='card'>
                     <p class="alert-info text-info">Bill for student <b><div th:text="${studentname}"></div></b> </p>
                     <table class="table table-info" id="mydata" >
                         <thead>
-                            <TR>     <th>Term</th>
+                            <TR><th>Term</th>
                                 <th>PTA</th>
                                 <th>SCHOOL FEES</th>
                                 <th>Academic Year</th>
@@ -523,27 +620,27 @@
 
                 </div>
                 <!--form for uploading excel file-->
-                <div th:if="${SelectExcelFileToUpload}">
+                <div th:if="${SelectExcelFileToUpload}" class="jumbotron">
                     <a th:href="@{/ShowExcelForm}">Upload Excel From Finance</a>&nbsp; &nbsp;<a th:href="@{/ShowStudentsDataExcelForm}">Upload Student Data</a>
 
                 </div>
                 <div th:if="${excel}" class="jumbotron">
                     <p>Please upload excel file (Finance)</p>
-                    <form th:method="post" class="form-inline" th:action="@{/GetFile}" enctype="multipart/form-data">
+                    <form th:method="post" class="form-inline" id="form" th:action="@{/GetFile}" enctype="multipart/form-data">
 
                         <input type="file" class="form-control "  th:name="file" >&nbsp; &nbsp;
                         <button type="submit" class="btn btn-primary" id="upload_btn" th:onclick="spinOnload()">Upload File</button>
                     </form>
-<button  class="btn btn-primary d-none" id="loading_btn" type="button">
-                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                    Loading.................
-                                </button>
+                    <button  class="btn btn-primary d-none" id="loading_btn" type="button">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Loading.................
+                    </button>
                 </div>
 
                 <!--Student Classes from excel File-->
                 <div class="row">
                     <div class="col-md-3">
-                        <DIV th:if="${StudentClasses}">
+                        <DIV th:if="${StudentClasses}" class="jumbotron">
 
                             <table class="table table-responsive-sm table-bordered table-striped">
                                 <tr>
@@ -557,8 +654,8 @@
                                 </tr>
                             </table>
                         </div></div>
-                    <div th:if="${StudentBills}" class="col-md-8">
-                        <table class="table table-striped table-bordered " id="mydata">
+                    <div th:if="${StudentBills}" class="col-md-8 card">
+                        <table class="table table-striped table-bordered table-primary " id="mydata">
                             <thead>
                                 <tr>
                                     <th>Student Id</th>
@@ -591,9 +688,9 @@
                             </div>
                         </form>
                         <button  class="btn btn-primary d-none" id="loading_btn" type="button">
-                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                    Sending SMS.................
-                                </button>
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            Sending SMS.................
+                        </button>
                     </div>
 
                     <!--upload excel file into database--->
@@ -602,13 +699,14 @@
                         <p>Please upload excel file (Student Data)</p>
                         <div class=" form-group mb-7">
                             <div class="custom-file">
-                               
-                                    <input type="file" class="custom-file-input "  th:name="file" id="file" oninput="input_filename()">&nbsp; &nbsp;
-                                    <lable id="file_input_lablel" class="custom-file-label">upload</lable>
-                                    <input type="hidden" th:value="@{/GetStudentsDataExcelFile}" id="route">
-                                    <button type="submit" class="btn btn-primary" id="upload_btn" th:onclick="upload()" >Upload File</button>
-                              
-                                
+
+                                <input type="file" class="custom-file-input "  th:name="file" id="file" oninput="input_filename()">&nbsp; &nbsp;
+                                <lable id="file_input_lablel" class="custom-file-label">upload</lable>
+                                <input type="hidden" th:value="@{/GetStudentsDataExcelFile}" id="route">
+                                <hr />
+                                <button type="submit" class="btn btn-primary" id="upload_btn" th:onclick="upload()" >Upload File</button>
+
+
                                 <button  class="btn btn-primary d-none" id="loading_btn" type="button">
                                     <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                     Uploading.................
@@ -620,40 +718,160 @@
                                         <div id="progress" class="progress-bar" role="progressbar" aria-valuenow="25" area-valuemin="0" area-valuemax="100">
                                         </div>
                                     </div> 
-                                
+
                                 </div>
                                 <div id="alert_wrapper"></div>
                             </div>
 
-                        </div>
+                        </div></div>
+
+                    <!--Add Teacher Form-->
+                    <div th:if="${TeacherForm}"   class=" jumbotron">
+                   <form th:method="post" id="form" th:action="@{/saveTeacher}" th:object="${teacher}">
+                       
+                            <div class="form-group ">
+                                <label for="text"> First Name</label>
+                                <input type="text"  class="form-control" th:field="*{FirstName}">
+                            </div>
 
 
 
+
+                            <div class="form-group ">
+                                <label for="inputAddress">Last Name</label>
+                                <input type="text" class="form-control"  th:field="*{LastName}">
+                            </div>
+
+                            <div class="form-group ">
+                                <label for="inputAddress">Staff ID</label>
+                                <input type="text" class="form-control"  th:field="*{StaffId}">
+                            </div>
+
+
+                            <div class="form-group  ">
+                                <label for="inputAddress">Sex</label>
+                                <select th:field="*{sex}" class="form-control">
+                                    <option value="Male"  >Male</option>
+                                    <option value="Female"  >Female</option>
+
+                                </select>
+                            </div>
+
+
+                            <div class="form-group ">
+                                <label for="inputAddress2">* Phone Number</label>
+                                <input type="tel" class="form-control "  th:field="*{PhoneNumber}">
+
+                            </div>
+                            <div class="form-group " style="margin-top:10px; ">
+
+                                <input type="submit" class="btn  btn-primary" value="Add Teacher" id="upload_btn" th:onclick="spinOnload()">
+                                <button  class="btn btn-primary d-none" id="loading_btn" type="button">
+                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    Saving .................
+                                </button>
+                                <hr />&nbsp;&nbsp;
+                                <button class="btn btn-secondary d-none" id="cancel_btn" type="button">Cancel Button</button>
+
+                            </div>   
+
+
+
+                        </form>
 
                     </div>
 
+                    <!--Displaying all the teachers we have in the school-->
+                    <div th:if='${teachers}'>
+                        <div class='row 'style="margin-left:4px; ">
+                            <table class="table table-striped jumbotron " id="mydata">
+                                <thead>
+                                    <tr>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Phone Number</th>
+                                        <th></th><th></th><th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="teacher:${teachers}">    
+                                        <td th:text="${teacher.FirstName}"></td>
+                                        <td th:text="${teacher.LastName}"></td>
+                                        <td th:text="${teacher.PhoneNumber}"></td>
+                                        <td><a th:href="@{/TeacherDatils/{TeacherId}(TeacherId=${teacher.TeacherId})}" class="btn btn-primary ">
+                                                Details</a></td>  
+                                        <td><a th:href="@{/AssignClassToTeacher/{TeacherId}(TeacherId=${teacher.TeacherId})}" class="btn btn-secondary ">
+                                                Assign Class</a></td>
+
+
+                                    </tr>
+
+                                    
+
+                                </tbody>
+                            </table>
+
+                        </div></div>
+                    <!--Showing teachers Details -->
+                    
+                   </div>
+
+
                 </div>
-                <!-- /.row -->
-
-                <!-- /.container -->
 
 
-                <!-- Bootstrap core JavaScript -->
-
-                <script th:src="@{http://127.0.0.1:8080/script/jquery.min.js}"></script>
-                <script th:src="@{http://127.0.0.1:8080/script/jquery.min.js}"></script>
-                <script th:src="@{http://127.0.0.1:8080/script/datatables.js}" type="text/javascript"></script>
-<script th:src="@{http://127.0.0.1:8080/script/ProgressDialog.js}" type="text/javascript"></script>
-
-                <script TYPE="text/javascript">
-                    $(document).ready(function () {
-                        $('#mydata').DataTable();
-                    });
 
 
+
+
+
+
+
+
+
+
+            </div></div>
+
+
+        <!-- /.row -->
+
+        <!-- /.container -->
+
+
+        <!-- Bootstrap core JavaScript -->
+
+        <script th:src="@{/script/jquery.min.js}"></script>
+        <script th:src="@{/script/jquery.min.js}"></script>
+        <script th:src="@{/script/datatables.js}" type="text/javascript"></script>
+        <script th:src="@{/script/ProgressDialog_1.js}" type="text/javascript"></script>
+        <script th:src="@{/script/bootstrap.min.js}" type="text/javascript"></script>
+
+        <script TYPE="text/javascript">
+            $(document).ready(function () {
+                $('#mydata').DataTable();
+            });
+
+
+
+        </script>
+        <script>
+function showImageThumbnail(fileInput){
+                     var thumbanil=document.getElementById('thumbnail');
+                     thumbanil.classList.remove("d-none");
+                     
+                     file=fileInput.files[0];
+                     reader= new FileReader();
+                     reader.onload=function (e){
+                         
+                         $('#thumbnail').attr('src',e.target.result);
+                     };
+                    reader.readAsDataURL(file);
+    
+    }
 
                 </script>
 
-                </body>
 
-                </html>
+</body>
+
+</html>

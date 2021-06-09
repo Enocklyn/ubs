@@ -3,17 +3,31 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.UBSFS.UnerBasicSchoolFinancialSystem.Student;
+package com.UBSDB.UnerBasicSchoolFinancialSystem.Student;
 
-import com.UBSFS.UnerBasicSchoolFinancialSystem.Bill.BillService;
-import com.UBSFS.UnerBasicSchoolFinancialSystem.Bill.StudentBill;
-import com.UBSFS.UnerBasicSchoolFinancialSystem.Term.Term;
-import com.UBSFS.UnerBasicSchoolFinancialSystem.klass.klass;
-import com.UBSFS.UnerBasicSchoolFinancialSystem.klass.klassService;
+import com.UBSDB.UnerBasicSchoolFinancialSystem.Bill.BillService;
+import com.UBSDB.UnerBasicSchoolFinancialSystem.Bill.StudentBill;
+import com.UBSDB.UnerBasicSchoolFinancialSystem.Term.Term;
+import com.UBSDB.UnerBasicSchoolFinancialSystem.klass.klass;
+import com.UBSDB.UnerBasicSchoolFinancialSystem.klass.klassService;
+import com.UBSDB.UnerBasicSchoolFinancialSystem.security.UserDetailsServiceImpl;
+import com.UBSDB.UnerBasicSchoolFinancialSystem.security.UserService;
+import com.UBSDB.UnerBasicSchoolFinancialSystem.security.role;
+import com.UBSDB.UnerBasicSchoolFinancialSystem.security.users;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -27,6 +41,8 @@ public class StudentService {
      private BillService BS; 
      @Autowired
      private klassService KS;
+     @Autowired
+     private UserService US;
      
     public String promoteStudent(Student student){
     klass klas=null;
@@ -168,16 +184,45 @@ public class StudentService {
         return "null";
         }
     
-    public String UpdateStudent(Student stud){
-      stud=ChangeToUpper(stud);
+    //Student who have stooped school
+    public String FlagStudent(String studId){
+    
+        Student stud=findStudent(studId);
+   
+         stud.setStudentStatus("Stopped");
+         SR.save(stud);
+    return "updated Successfully";
+       
+        }
+   
+    public String UpdateStudentRecords(Student stud){
+    stud=ChangeToUpper(stud);
+        
         try{
         Student student=findStudent(stud.getStudentId());
-        
-        List<StudentBill>bill=new ArrayList<>();
-    bill=student.getBill();
+      
+    List<StudentBill>bill=student.getBill();
     stud.setBill(bill);
-    saveStudent(stud);
+   saveStudent(stud);
     return "updated Successfully";
+       }catch(Exception ez){
+       return "error"+ez.toString();
+       }
+    
+    }
+    
+    public String UpdateStudent(Student stud,MultipartFile file){
+        
+        stud=ChangeToUpper(stud);
+        
+        try{
+        Student student=findStudent(stud.getStudentId());
+      
+     List<StudentBill>bill=student.getBill();
+     stud.setBill(bill);
+     SR.save(stud);
+    
+     return "updated Successfully";
        }catch(Exception ez){
        return "error"+ez.toString();
        }
@@ -193,12 +238,18 @@ public class StudentService {
         return stud;
     
     }
-    
-    public String saveStudent(Student stud){
+     public String saveStudentWithPicture(Student stud,MultipartFile file){
        stud= ChangeToUpper(stud);
-    try{
+       stud.setStudentStatus("in School");
+          try{
+           String fileName=org.springframework.util.StringUtils.cleanPath(file.getOriginalFilename());
+          stud.setStudentPicture(fileName);
+   stud.setProductPicturePath("/student-pics/"+stud.getStudentId()+"/"+stud.getStudentPicture());
+    
         
     SR.save(stud);
+    CreateStudentAccount(stud);
+    uploadPicture(file,stud,fileName);
     return "Student "+stud.getFirstName()+" "+stud.getSurname()+" have been added successfully";
     }catch (Exception ex){
     
@@ -206,13 +257,78 @@ public class StudentService {
     }
     
     }
-    public String editStudetDetails(Student stud){
-    if(SR.findById(stud.getStudentId()).isPresent()){
+   
     
-    return saveStudent(stud);
+    public String uploadPicture(MultipartFile multiPartFile,Student stud,String fileName){
+    try{
+     String uploadDir="stud-pics/"+stud.getStudentklass().getClassName()+"/"+stud.getStudentId();
+        Path
+                uploadPath=Paths.get(uploadDir);
+        if(!Files.exists(uploadPath)){
+        Files.createDirectories(uploadPath);
+        }
+        InputStream inputStream=multiPartFile.getInputStream();
+        
+        Path filePath=uploadPath.resolve(fileName);
+        Files.copy( inputStream, filePath,StandardCopyOption.REPLACE_EXISTING);
+        return "successfully uploaded";
+    }catch(IOException ex){
+    return "error"+ex.toString();
     }
-    return "null";
+    
     }
+    
+    
+    
+    public users CreateStudentAccount(Student student){
+        users user=new users();
+             BCryptPasswordEncoder encode=new BCryptPasswordEncoder();
+        
+        try{
+            
+            user.setEnabled(true);
+            user.setUsername(student.getStudentId());
+      
+           user.setPassword(encode.encode(student.getStudentId()+"ubs"));
+            role role=new role();
+            role.setName("Student");
+            Set<role>roles=new HashSet<>();
+            roles.add(role);
+           user.setRoles(roles);
+            US.addUser(user);
+        }catch(Exception ex){ex.printStackTrace();
+        }
+    return user;
+    }
+    public String ChangeDefaulPassword(String studentId,String Newpassword){
+       BCryptPasswordEncoder encode=new BCryptPasswordEncoder();
+        
+        try{
+    users user=US.FindUserById(studentId);
+    user.setPassword(encode.encode(Newpassword));
+    US.addUser(user);
+    return "successfully changed password";
+    
+    }catch(Exception ex){return " error... "+ex.toString();}
+    }
+    
+    
+    public String saveStudent(Student stud){
+       stud= ChangeToUpper(stud);
+       stud.setStudentStatus("in School");
+    try{
+        
+    SR.save(stud);
+    CreateStudentAccount(stud);
+    
+    return "Student "+stud.getFirstName()+" "+stud.getSurname()+" have been added successfully";
+    }catch (Exception ex){
+    
+    return " fatal error please contact admin "+ex.toString();
+    }
+    
+    }
+   
     public Student findStudent(String id){
     return SR.getOne(id);
     }
@@ -241,14 +357,25 @@ public class StudentService {
     
     return SR.findAll();
     }
+    
     public List<Student>GetStudents_In_A_Particular_Class(klass klass){
+      try{
         List <Student>stud=new ArrayList<>();
     for(Student student:SR.findAll()){
-    if(student.getStudentklass().getClassName().equals(klass.getClassName()))
+    if(     (student.getStudentklass().getClassName().equals(klass.getClassName()))&(!student.getStudentStatus().equals("Stopped")))
     {
-    stud.add(student); }}
+          stud.add(student);
+    } else {
+    }}
     return stud;
+    }catch(Exception ex){
+    System.out.println(ex.toString());
+    return null;
+    
     }
+      }
+    
+    //saving many students into db. Mostly this deal with data from excel
      public String saveStudentsIntoDb(List<Student>students){
      try{
          students.forEach(stud -> this.saveStudent(stud));

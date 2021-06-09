@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.UBSFS.UnerBasicSchoolFinancialSystem.PTA;
+package com.UBSDB.UnerBasicSchoolFinancialSystem.PTA;
 
-import com.UBSFS.UnerBasicSchoolFinancialSystem.Term.Term;
+import com.UBSDB.UnerBasicSchoolFinancialSystem.Term.Term;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

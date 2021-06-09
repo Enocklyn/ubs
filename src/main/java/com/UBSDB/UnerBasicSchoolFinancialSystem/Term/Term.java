@@ -3,8 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.UBSFS.UnerBasicSchoolFinancialSystem.Term;
- import com.UBSFS.UnerBasicSchoolFinancialSystem.Academic.Academic;
+package com.UBSDB.UnerBasicSchoolFinancialSystem.Term;
+ import com.UBSDB.UnerBasicSchoolFinancialSystem.Academic.Academic;
 import java.time.LocalDate;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

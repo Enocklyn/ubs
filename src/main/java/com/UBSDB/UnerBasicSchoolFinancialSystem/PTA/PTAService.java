@@ -3,14 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.UBSFS.UnerBasicSchoolFinancialSystem.PTA;
+package com.UBSDB.UnerBasicSchoolFinancialSystem.PTA;
 
-import com.UBSFS.UnerBasicSchoolFinancialSystem.Bill.BillService;
-import com.UBSFS.UnerBasicSchoolFinancialSystem.Bill.StudentBill;
-import com.UBSFS.UnerBasicSchoolFinancialSystem.SchoolFees.SchoolFeesService;
-import com.UBSFS.UnerBasicSchoolFinancialSystem.Student.Student;
-import com.UBSFS.UnerBasicSchoolFinancialSystem.Student.StudentService;
-import com.UBSFS.UnerBasicSchoolFinancialSystem.Term.Term;
+import com.UBSDB.UnerBasicSchoolFinancialSystem.Bill.BillService;
+import com.UBSDB.UnerBasicSchoolFinancialSystem.Bill.StudentBill;
+import com.UBSDB.UnerBasicSchoolFinancialSystem.SchoolFees.SchoolFeesService;
+import com.UBSDB.UnerBasicSchoolFinancialSystem.Student.Student;
+import com.UBSDB.UnerBasicSchoolFinancialSystem.Student.StudentService;
+import com.UBSDB.UnerBasicSchoolFinancialSystem.Term.Term;
+import com.UBSDB.UnerBasicSchoolFinancialSystem.Term.TermService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -28,7 +29,8 @@ public class PTAService {
    
     @Autowired
     private BillService  BS;
-    private StudentService SS;
+    @Autowired
+    private TermService TS;
      @Autowired
      private SchoolFeesService SFS;
     
@@ -59,7 +61,19 @@ public class PTAService {
     } //return "please add Fess for this term "+pta.getTerm().getTermName();
    
 }
+   public boolean checkIf_PTA_Is_Entered(Term term){
+  for(PTA Pta:ptaR.findAll()){
+  if(Pta.getTerm().equals(term)){
+  
+  return true;
+  
+  }
+  
+  }
    
+   return false;
+   
+   }
    
     public Set<Term> PTATerm(){
    return SFS.Feeterms();

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.UBSFS.UnerBasicSchoolFinancialSystem.Bill;
+package com.UBSDB.UnerBasicSchoolFinancialSystem.Bill;
 
 import org.springframework.stereotype.Controller;
 

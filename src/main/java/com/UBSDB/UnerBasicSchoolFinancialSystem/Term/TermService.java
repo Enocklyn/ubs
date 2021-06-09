@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.UBSFS.UnerBasicSchoolFinancialSystem.Term;
+package com.UBSDB.UnerBasicSchoolFinancialSystem.Term;
 
-import com.UBSFS.UnerBasicSchoolFinancialSystem.Academic.Academic;
-import com.UBSFS.UnerBasicSchoolFinancialSystem.Academic.AcademicService;
+import com.UBSDB.UnerBasicSchoolFinancialSystem.Academic.Academic;
+import com.UBSDB.UnerBasicSchoolFinancialSystem.Academic.AcademicService;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +41,21 @@ public class TermService {
     
     public List<Term>terms(){
      return TS.findAll();
+    
     }
+    
+    public Term getCurrentTerm(){
+        try{
+    for(Term t:terms()){
+       if(LocalDate.now().isBefore(LocalDate.parse(t.getStartDate()))||LocalDate.now().
+               isAfter(LocalDate.parse(t.getEndDate()))==true){
+       } else {
+         return t;  
+        } } }catch (Exception ex){
+        ex.printStackTrace();
+        }return null;
+    }
+    
     
     public List<Term>BasedOnAcademicYear(Academic academic){
     List <Term>t=new ArrayList<>();

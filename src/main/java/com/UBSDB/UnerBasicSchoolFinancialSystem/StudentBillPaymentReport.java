@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.UBSFS.UnerBasicSchoolFinancialSystem;
+package com.UBSDB.UnerBasicSchoolFinancialSystem;
 
-import com.UBSFS.UnerBasicSchoolFinancialSystem.Bill.StudentBill;
-import com.UBSFS.UnerBasicSchoolFinancialSystem.FeePayment.Payments;
-import com.UBSFS.UnerBasicSchoolFinancialSystem.Student.Student;
+import com.UBSDB.UnerBasicSchoolFinancialSystem.Bill.StudentBill;
+import com.UBSDB.UnerBasicSchoolFinancialSystem.FeePayment.Payments;
+import com.UBSDB.UnerBasicSchoolFinancialSystem.Student.Student;
 import java.time.LocalDate;
 import java.util.List;
 import org.springframework.stereotype.Component;

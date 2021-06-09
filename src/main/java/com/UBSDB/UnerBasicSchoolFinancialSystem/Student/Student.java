@@ -4,10 +4,10 @@
  * and open the template in the editor.
  */
 
-package com.UBSFS.UnerBasicSchoolFinancialSystem.Student;
+package com.UBSDB.UnerBasicSchoolFinancialSystem.Student;
 
-import com.UBSFS.UnerBasicSchoolFinancialSystem.Bill.StudentBill;
-import com.UBSFS.UnerBasicSchoolFinancialSystem.klass.klass;
+import com.UBSDB.UnerBasicSchoolFinancialSystem.Bill.StudentBill;
+import com.UBSDB.UnerBasicSchoolFinancialSystem.klass.klass;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -41,7 +41,26 @@ public class Student implements Serializable {
     private String parentNumber;
     private String residentialAddress;
     private String Occupation;
+    private String Sex;
+    //Checking those who have stooped school
+
+    public String getSex() {
+        return Sex;
+    }
+
+    public void setSex(String Sex) {
+        this.Sex = Sex;
+    }
     
+    private String StudentStatus;
+
+    public String getStudentStatus() {
+        return StudentStatus;
+    }
+
+    public void setStudentStatus(String StudentStatus) {
+        this.StudentStatus = StudentStatus;
+    }
     @OneToOne
     private klass studentklass;
 
@@ -172,6 +191,24 @@ public class Student implements Serializable {
     public void setStudentklass(klass studentklass) {
         this.studentklass = studentklass;
     }
-    
-    
+    private  String studentPicture;
+
+    public String getStudentPicture() {
+        return studentPicture;
+    }
+
+    public void setStudentPicture(String studentPicture) {
+        this.studentPicture = studentPicture;
+    }
+    private  String productPicturePath;
+
+    public void setProductPicturePath(String productPicturePath) {
+        this.productPicturePath = productPicturePath;
+    }
+
+    public String getProductPicturePath() {
+     if(studentPicture==null||StudentId==null)return null;
+      return "/stud-pics/"+StudentId+"/"+studentPicture;
+
+    }
 }

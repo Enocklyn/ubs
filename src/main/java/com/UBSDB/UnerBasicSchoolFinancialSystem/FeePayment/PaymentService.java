@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.UBSFS.UnerBasicSchoolFinancialSystem.FeePayment;
+package com.UBSDB.UnerBasicSchoolFinancialSystem.FeePayment;
 
-import com.UBSFS.UnerBasicSchoolFinancialSystem.Academic.Academic;
-import com.UBSFS.UnerBasicSchoolFinancialSystem.Bill.BillService;
-import com.UBSFS.UnerBasicSchoolFinancialSystem.Bill.StudentBill;
-import com.UBSFS.UnerBasicSchoolFinancialSystem.Student.Student;
-import com.UBSFS.UnerBasicSchoolFinancialSystem.Student.StudentService;
-import com.UBSFS.UnerBasicSchoolFinancialSystem.Term.Term;
-import com.UBSFS.UnerBasicSchoolFinancialSystem.Term.TermService;
+import com.UBSDB.UnerBasicSchoolFinancialSystem.Academic.Academic;
+import com.UBSDB.UnerBasicSchoolFinancialSystem.Bill.BillService;
+import com.UBSDB.UnerBasicSchoolFinancialSystem.Bill.StudentBill;
+import com.UBSDB.UnerBasicSchoolFinancialSystem.Student.Student;
+import com.UBSDB.UnerBasicSchoolFinancialSystem.Student.StudentService;
+import com.UBSDB.UnerBasicSchoolFinancialSystem.Term.Term;
+import com.UBSDB.UnerBasicSchoolFinancialSystem.Term.TermService;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +56,7 @@ public class PaymentService {
   
   public Payments ShowNewPayment(String studentId,String paymentType){
      if(GetPaymentTerm()!=null){
-        Student student=SS.findStudent(studentId);
+     Student student=SS.findStudent(studentId);
     Payments payment = new Payments();
     payment.setStudent(student);
     payment.setTerm(GetPaymentTerm());
@@ -81,8 +81,9 @@ public class PaymentService {
     for(Term t:TS.terms()){
        if(LocalDate.now().isBefore(LocalDate.parse(t.getStartDate()))||LocalDate.now().
                isAfter(LocalDate.parse(t.getEndDate()))==true){
+       
        } else {
-           return t;
+         return t;  
         }
     
     }

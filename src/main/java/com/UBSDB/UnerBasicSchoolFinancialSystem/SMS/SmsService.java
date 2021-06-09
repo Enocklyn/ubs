@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.UBSFS.UnerBasicSchoolFinancialSystem.SMS;
+package com.UBSDB.UnerBasicSchoolFinancialSystem.SMS;
 
-import com.UBSFS.UnerBasicSchoolFinancialSystem.Student.Student;
-import com.UBSFS.UnerBasicSchoolFinancialSystem.Student.StudentService;
+import com.UBSDB.UnerBasicSchoolFinancialSystem.Student.Student;
+import com.UBSDB.UnerBasicSchoolFinancialSystem.Student.StudentService;
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;

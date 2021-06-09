@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.UBSFS.UnerBasicSchoolFinancialSystem.PTA;
+package com.UBSDB.UnerBasicSchoolFinancialSystem.PTA;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

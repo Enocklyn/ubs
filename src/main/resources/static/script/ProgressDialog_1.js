@@ -12,6 +12,10 @@ var upload_btn = document.getElementById("upload_btn");
 var loading_btn = document.getElementById("loading_btn");
 var cancel_btn = document.getElementById("cancel_btn");
 
+var staffTextField=document.getElementById("staff");
+
+var catField=document.getElementById("ParentCategory").value;
+
 var alert_wrapper = document.getElementById("alert_wrapper");
 var file_input = document.getElementById("file");
 var file_input_lablel=document.getElementById("file_input_lablel"); 
@@ -102,7 +106,16 @@ function upload(){
     });
    
 function spinOnload(){
+    cancel_btn .classList.remove("d-none");
   loading_btn.classList.remove ("d-none");   
   upload_btn.classList.add("d-none"); 
-    
+   
+   cancel_btn.addEventListener("click",function(){
+        loading_btn.classList.add("d-none");
+        upload_btn.classList.remove("d-none");
+         cancel_btn .classList.add("d-none");
+    });
+   
 }
+
+    

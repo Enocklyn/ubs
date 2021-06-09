@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.UBSFS.UnerBasicSchoolFinancialSystem.klass;
+package com.UBSDB.UnerBasicSchoolFinancialSystem.klass;
 
+import com.UBSDB.UnerBasicSchoolFinancialSystem.Subject.Subject;
+import java.util.List;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -22,12 +23,13 @@ public class klass {
 
     public klass() {
     }
-
+    
+   
     public klass(String ClassName, String ClassLevel) {
         this.ClassName = ClassName;
         this.ClassLevel = ClassLevel;
     }
-  
+ 
   private String ClassLevel;
   
   public String getClassName() {
@@ -45,7 +47,8 @@ public class klass {
     public void setClassLevel(String ClassLevel) {
         this.ClassLevel = ClassLevel;
     }
-    
+
+   
     
     
     

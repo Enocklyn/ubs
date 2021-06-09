@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.UBSFS.UnerBasicSchoolFinancialSystem.Academic;
+package com.UBSDB.UnerBasicSchoolFinancialSystem.Academic;
 
-import com.UBSFS.UnerBasicSchoolFinancialSystem.Student.Student;
-import com.UBSFS.UnerBasicSchoolFinancialSystem.Student.StudentService;
-import com.UBSFS.UnerBasicSchoolFinancialSystem.Term.Term;
-import com.UBSFS.UnerBasicSchoolFinancialSystem.Term.TermService;
+import com.UBSDB.UnerBasicSchoolFinancialSystem.Student.Student;
+import com.UBSDB.UnerBasicSchoolFinancialSystem.Student.StudentService;
+import com.UBSDB.UnerBasicSchoolFinancialSystem.Term.Term;
+import com.UBSDB.UnerBasicSchoolFinancialSystem.Term.TermService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
