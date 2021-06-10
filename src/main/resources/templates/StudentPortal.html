@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=0.6">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>Login</title>
+        <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
+
+        <link th:href="@{/css/SideBar.css}" th:rel="stylesheet">
+        <link th:href="@{/css/dataTables.bootstrap.css}" rel="stylesheet" type="text/css"/>
+        <link th:href="@{/css/DataTables/jquery.dataTables.css}" rel="stylesheet" type="text/css"/>
+        <link th:href="@{/css/DataTables/jquery.dataTables.min.css}" rel="stylesheet" type="text/css"/>
+        <link th:href="@{/css/fontawesome.css}" rel="stylesheet}" type="text/css"/>
+        <link th:href="@{/css/DataTables/dataTables.foundation.min.css}" rel="stylesheet" type="text/css"/>
+        <link th:href="@{/css/DataTables/dataTables.jqueryui.css}" rel="stylesheet" type="text/css"/>
+    </head>
+
+    <body th:style="'background-image:url('+@{/pro-pics/ubs2.jpg}+');'" >
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+            <div class="container">
+
+                <a class="navbar-brand " style="font-size:18px; " th:href="@{/StudentPortal/}">
+                    <img th:src="@{/pro-pics/UENR.jpg}" height="60" />
+
+                    UNER  Basic School</a>
+            </div>
+           
+        </nav>
+
+
+        <!-- Page Content -->
+        <div class="container" >
+
+            <div class="row" style="margin-top: 120px;">
+
+                <div class="col-md-3 col-sm-3  ">
+
+                    <div class="sidenav">
+                        <hr/><hr/><hr /><hr /><hr />
+                        <a th:href="@{/StudentPortal/Detail/}"  >Personal Info</a>
+                        <hr />
+                        <a th:href="@{/StudentPortal/Assessment/}"  >Assessment</a>
+                        <hr />
+                        <a th:href="@{/StudentPortal/getBills}"  >OutStanding Balance</a>
+                        <hr />
+                        <form th:action="@{/logout}" method="post">
+                     <input type="submit" value="Logout" class="btn btn-info " />
+                        </form>
+                    </div>
+
+                </div>
+                <!-- /.col-lg-3 -->
+
+                <div class="col-md-7 col-sm-7 offset-sm-3 " >
+
+                    <div class="alert alert-info text-info" th:if="${msg}" th:text="${msg}">
+                    </div>
+
+
+
+                    <div th:if="${StudentAssessment}" >
+                       <DIV CLASS="row  ">
+                        <!---    <table class="table table-info">
+                                <tr></td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<td><img th:src="@{${StudentDetailPicture.productPicturePath}}" /></td>
+                                </tr>
+                                <tr>
+                                    <td>First Name:</td ><td th:text="${StudentDetailPicture.FirstName}">    </tr>
+                                <tr>
+                                    <td>Sur Name:</td ><td th:text="${StudentDetailPicture.FirstName}"></td>   
+
+                                </tr> 
+                                <td>Class Name: </td><td th:text="${StudentDetailPicture.studentklass.ClassName}"></td>
+                            </table>
+                        <div>--->
+                        <table class=" table    table-primary " style="font-size: 18px;" ><tr>
+                                    <thead>
+                                        <tr>
+
+                                            <th>Subject</th>
+                                            <th>Total Test Score</th>
+                                            <th>Test Score Average</th>
+                                            <th>Exam Score</th>
+                                            <th>Exam Average</th>
+                                            <th>Total Score</th>
+
+                                        </tr></thead><tbody>
+                                    <th:block th:each="Tassement :${StudentAssessment}">
+                                        <tr>
+                                            <td th:text="${Tassement.key.TermName}"></td> 
+                                        </tr>
+                                        <tr>
+                                        <th:block th:each="assement:${Tassement.value}">
+                                            <td th:text="${assement.subject.SubjectName}"></td>
+                                            <td th:text="${assement.TotalTestScore}"></td>      
+                                            <td th:text="${assement.TotalTestScoreAverage}"></td>
+
+                                            <td th:text="${assement.ExamScores}"></td>
+                                            <td th:text="${assement.ExamsAverage}"></td>
+                                            <td th:text="${assement.TotalScore}"></td>
+                                        </th:block>
+                                        </tr>
+                                    </th:block></tbody>
+                                </table>
+                            </div>
+                    </div>
+
+                            <div>
+                                <!---Student Information---->
+                                <div th:if="${StudentDetails}" >
+                                    <table class="table table-info  table-responsive table-responsive-sm" >
+                                        <tr>
+                                            <td> First Name  </td> <td th:text="${StudentDetails.FirstName}"></td>
+                                        </tr><tr>
+                                            <td>  Last Name </td><td th:text="${StudentDetails.LastName}"></td>
+                                        </tr>
+                                        <tr><td>Surname </td> <td th:text="${StudentDetails.surname}"></td>
+                                        </tr><tr>
+                                            <td>    Date Of Birth </td>
+                                            <td th:text="${StudentDetails.dateOfBirth}"></td>
+                                            </td>
+                                        </tr><tr>
+                                            <td>   Sex </td> <td th:text="${StudentDetails.Sex}"></td>
+                                        </tr><tr>
+                                            <td>  NHIS Card Number </td> <td th:text="${StudentDetails.NHISCardumber}"></td>
+                                   </td></tr>
+                                        <tr>   <td>   Guardian Name </td> <td th:text="${StudentDetails.GuadiaName}"></td>
+                                   </tr>
+                                   <tr>
+                                       <td> Phone Number </td> <td th:text="${StudentDetails.parentNumber}"></td>
+                                   </tr><tr>
+                                        <td> residential Address </td><td th:text="${StudentDetails.residentialAddress}"></td>   
+                           
+                                    </tr> 
+
+
+                            </table>
+
+                            </p>
+
+
+                        </div>
+
+ <div th:if="${Studentbills}" class='card'>
+                    <p class="alert-info text-info">Bill for student <b><div th:text="${studentname}"></div></b> </p>
+                    <table class="table table-info" id="mydata" >
+                        <thead>
+                            <TR><th>Term</th>
+                                <th>PTA</th>
+                                <th>SCHOOL FEES</th>
+                                <th>Academic Year</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <TR th:each="bill:${Studentbills}">
+                                <td th:text="${bill.term.TermName}"></td>
+                                <td th:text="${bill.pta.Amount}"></td>
+                                <td th:text="${bill.fee.Amount}"></td>
+                                <td th:text="${bill.fee.term.academicyear.AcademicYear}"></td>
+
+                            </tr>
+                            <tr>
+
+                                <td></td>    
+                                <td></td>
+                                <td>Total Fees:</td><td th:text="${totalBillFees}"></td>  
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                    </div>
+
+                </div>
+                <!-- /.row -->
+
+
+
+            </div>
+ </div> </div> 
+            <!-- /.row -->
+
+
+            <!-- /.container -->
+
+
+
+            <!-- Bootstrap core JavaScript -->
+            <script th:src="@{/script/jquery.min.js}"></script>
+            <script th:src="@{/script/jquery.min.js}"></script>
+            <script th:src="@{/script/datatables.js}" type="text/javascript"></script>
+            <script th:src="@{/script/ProgressDialog_1.js}" type="text/javascript"></script>
+            <script th:src="@{/script/bootstrap.min.js}" type="text/javascript"></script>
+
+            <script TYPE="text/javascript">
+                $(document).ready(function () {
+                    $('#mydata').DataTable();
+                });
+
+
+
+            </script>
+
+
+            </body>
+
+            </html>

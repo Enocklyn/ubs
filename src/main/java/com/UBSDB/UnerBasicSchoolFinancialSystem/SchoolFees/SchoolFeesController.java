@@ -33,6 +33,8 @@ public class SchoolFeesController {
    
    @PostMapping("/savefees")
       public String SaveFess(Model model,SchoolFees fess){
+           System.out.println("......."+fess.getFeeSpecification()+"........"+fess.getTerm().getTermName());
+     
       model.addAttribute("msg",SFS.SaveSchoolFees(fess));
       if(ptas.checkIf_PTA_Is_Entered(fess.getTerm())==false){
           return "redirect:/ShowPTAForm";

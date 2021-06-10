@@ -49,25 +49,13 @@ public class SchoolFeesService {
     if(CheckIfStaffOrNonStaffFeesHaveBeenAssigned( fee).equals("true")){
         try{
         
-       StudentBill bill=new StudentBill();
-      
-       SR.save(fee); 
-       bill.setFee(fee);
-       bill.setTerm(fee.getTerm());
-        BS.saveBill(bill);
-             
-       AssignBillToStudentBasedOnFees(bill);
-       
-      return "saved successfully ";
-    
-    }catch (Exception ex){
-    
-    return "error" +ex.toString();
-    }
+       StudentBill bill=new StudentBill();SR.save(fee); 
+       bill.setFee(fee);bill.setTerm(fee.getTerm());
+        BS.saveBill(bill); AssignBillToStudentBasedOnFees(bill);
+       return "saved successfully ";}catch (Exception ex){return "error" +ex.toString();}
+    }return CheckIfStaffOrNonStaffFeesHaveBeenAssigned( fee);
     }
     
-    return CheckIfStaffOrNonStaffFeesHaveBeenAssigned( fee);
-    }
     
     public String CheckIfStaffOrNonStaffFeesHaveBeenAssigned(SchoolFees fee){
     
@@ -89,7 +77,9 @@ public class SchoolFeesService {
     public void AssignBillToStudentBasedOnFees(StudentBill bill){
         
          for(Student stud:SS.students()){
-         if(stud.getParentCategory().equals(bill.getFee().getFeeSpecification())&(stud.getStudentStatus().equals("in School"))){
+         if(stud.getParentCategory().equals(bill.getFee()
+                 .getFeeSpecification())&(stud.getStudentStatus()
+                         .equals("in School"))){
       List<StudentBill>bil= stud.getBill();
       bil.add(bill);
       stud.setStudentId(stud.getStudentId());
